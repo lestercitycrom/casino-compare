@@ -1,0 +1,21 @@
+/*
+Theme Name: Casino Compare Theme
+Theme URI: https://casino-compare.local
+Author: Codex
+Description: Lightweight custom theme for the casino compare platform.
+Version: 0.1.0
+Text Domain: casino-compare-theme
+*/
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #111827;
+    background: #f8fafc;
+}
+
+.site-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+}
