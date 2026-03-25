@@ -12,22 +12,22 @@ function ccc_get_casino_meta_boxes(): array
         'ccc_casino_brand' => [
             'title' => __('Brand', 'casino-compare-core'),
             'fields' => [
-                ['key' => 'logo', 'label' => __('Logo', 'casino-compare-core'), 'type' => 'image'],
-                ['key' => 'affiliate_link', 'label' => __('Affiliate Link', 'casino-compare-core'), 'type' => 'text'],
-                ['key' => 'year_founded', 'label' => __('Year Founded', 'casino-compare-core'), 'type' => 'number'],
-                ['key' => 'trustpilot_score', 'label' => __('Trustpilot Score', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'app_available', 'label' => __('App Available', 'casino-compare-core'), 'type' => 'boolean'],
+                ['key' => 'logo', 'label' => __('Logo', 'casino-compare-core'), 'type' => 'image', 'layout' => 'full'],
+                ['key' => 'affiliate_link', 'label' => __('Affiliate Link', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
+                ['key' => 'year_founded', 'label' => __('Year Founded', 'casino-compare-core'), 'type' => 'number', 'layout' => 'third'],
+                ['key' => 'trustpilot_score', 'label' => __('Trustpilot Score', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'app_available', 'label' => __('App Available', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'third'],
             ],
         ],
         'ccc_casino_rating' => [
             'title' => __('Rating', 'casino-compare-core'),
             'fields' => [
-                ['key' => 'overall_rating', 'label' => __('Overall Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'rating_bonus', 'label' => __('Bonus Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'rating_games', 'label' => __('Games Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'rating_payments', 'label' => __('Payments Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'rating_support', 'label' => __('Support Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
-                ['key' => 'rating_mobile', 'label' => __('Mobile Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1'],
+                ['key' => 'overall_rating', 'label' => __('Overall Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_bonus', 'label' => __('Bonus Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_games', 'label' => __('Games Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_payments', 'label' => __('Payments Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_support', 'label' => __('Support Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_mobile', 'label' => __('Mobile Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
             ],
         ],
         'ccc_casino_bonus' => [
@@ -45,26 +45,31 @@ function ccc_get_casino_meta_boxes(): array
         'ccc_casino_technical' => [
             'title' => __('Technical', 'casino-compare-core'),
             'fields' => [
-                ['key' => 'license', 'label' => __('License', 'casino-compare-core'), 'type' => 'text'],
-                ['key' => 'license_number', 'label' => __('License Number', 'casino-compare-core'), 'type' => 'text'],
-                ['key' => 'games_count', 'label' => __('Games Count', 'casino-compare-core'), 'type' => 'number'],
+                ['key' => 'license', 'label' => __('License', 'casino-compare-core'), 'type' => 'text', 'layout' => 'third'],
+                ['key' => 'license_number', 'label' => __('License Number', 'casino-compare-core'), 'type' => 'text', 'layout' => 'third'],
+                ['key' => 'games_count', 'label' => __('Games Count', 'casino-compare-core'), 'type' => 'number', 'layout' => 'third'],
                 ['key' => 'withdrawal_time_min', 'label' => __('Withdrawal Time Min', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'withdrawal_time_max', 'label' => __('Withdrawal Time Max', 'casino-compare-core'), 'type' => 'text'],
-                ['key' => 'providers', 'label' => __('Providers', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['name' => __('Provider Name', 'casino-compare-core')]],
-                ['key' => 'deposit_methods', 'label' => __('Deposit Methods', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['name' => __('Method', 'casino-compare-core')]],
-                ['key' => 'withdrawal_methods', 'label' => __('Withdrawal Methods', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['name' => __('Method', 'casino-compare-core')]],
+                ['key' => 'providers', 'label' => __('Providers', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'full', 'subfields' => ['name' => __('Provider Name', 'casino-compare-core')]],
+                ['key' => 'deposit_methods', 'label' => __('Deposit Methods', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'full', 'subfields' => ['name' => __('Method', 'casino-compare-core')]],
+                ['key' => 'withdrawal_methods', 'label' => __('Withdrawal Methods', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'full', 'subfields' => ['name' => __('Method', 'casino-compare-core')]],
             ],
         ],
         'ccc_casino_content' => [
             'title' => __('Content', 'casino-compare-core'),
             'fields' => [
-                ['key' => 'pros', 'label' => __('Pros', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['text' => __('Pro', 'casino-compare-core')]],
-                ['key' => 'cons', 'label' => __('Cons', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['text' => __('Con', 'casino-compare-core')]],
+                ['key' => 'pros', 'label' => __('Pros', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'half', 'subfields' => ['text' => __('Pro', 'casino-compare-core')]],
+                ['key' => 'cons', 'label' => __('Cons', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'half', 'subfields' => ['text' => __('Con', 'casino-compare-core')]],
                 ['key' => 'intro_text', 'label' => __('Intro Text', 'casino-compare-core'), 'type' => 'textarea', 'rows' => 5],
+                ['key' => 'summary_1_title', 'label' => __('Summary 1 Title', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'summary_1', 'label' => __('Summary 1', 'casino-compare-core'), 'type' => 'wysiwyg'],
+                ['key' => 'summary_2_title', 'label' => __('Summary 2 Title', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'summary_2', 'label' => __('Summary 2', 'casino-compare-core'), 'type' => 'wysiwyg'],
+                ['key' => 'summary_3_title', 'label' => __('Summary 3 Title', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'summary_3', 'label' => __('Summary 3', 'casino-compare-core'), 'type' => 'wysiwyg'],
+                ['key' => 'summary_4_title', 'label' => __('Summary 4 Title', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'summary_4', 'label' => __('Summary 4', 'casino-compare-core'), 'type' => 'wysiwyg'],
+                ['key' => 'summary_5_title', 'label' => __('Summary 5 Title', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'summary_5', 'label' => __('Summary 5', 'casino-compare-core'), 'type' => 'wysiwyg'],
                 ['key' => 'final_verdict', 'label' => __('Final Verdict', 'casino-compare-core'), 'type' => 'wysiwyg'],
             ],
@@ -72,9 +77,9 @@ function ccc_get_casino_meta_boxes(): array
         'ccc_casino_relations_seo' => [
             'title' => __('Relations & SEO', 'casino-compare-core'),
             'fields' => [
-                ['key' => 'alternative_casinos', 'label' => __('Alternative Casinos', 'casino-compare-core'), 'type' => 'relation', 'post_type' => 'casino', 'multiple' => true, 'max_items' => 5],
-                ['key' => 'money_page_links', 'label' => __('Money Pages', 'casino-compare-core'), 'type' => 'relation', 'post_type' => 'landing', 'multiple' => true],
-                ['key' => 'seo_title', 'label' => __('SEO Title', 'casino-compare-core'), 'type' => 'text'],
+                ['key' => 'alternative_casinos', 'label' => __('Alternative Casinos', 'casino-compare-core'), 'type' => 'relation', 'post_type' => 'casino', 'multiple' => true, 'max_items' => 5, 'layout' => 'half'],
+                ['key' => 'money_page_links', 'label' => __('Money Pages', 'casino-compare-core'), 'type' => 'relation', 'post_type' => 'landing', 'multiple' => true, 'layout' => 'half'],
+                ['key' => 'seo_title', 'label' => __('SEO Title', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
                 ['key' => 'meta_description', 'label' => __('Meta Description', 'casino-compare-core'), 'type' => 'textarea', 'rows' => 3],
                 ['key' => 'faq', 'label' => __('FAQ', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['question' => __('Question', 'casino-compare-core'), 'answer' => __('Answer', 'casino-compare-core')]],
             ],
@@ -107,39 +112,9 @@ function ccc_render_casino_meta_box(WP_Post $post, array $callback_args): void
         return;
     }
 
-    wp_nonce_field('ccc_save_casino_fields', 'ccc_casino_nonce');
+    ccc_render_meta_box_nonce('ccc_save_casino_fields', 'ccc_casino_nonce');
 
-    foreach ($definition['fields'] as $field) {
-        $key = $field['key'];
-        $value = ccc_get_meta_value($post->ID, $key, $field['type'] === 'repeater' ? [] : '');
-
-        switch ($field['type']) {
-            case 'text':
-                ccc_render_text($key, $field['label'], (string) $value, $field);
-                break;
-            case 'textarea':
-                ccc_render_textarea($key, $field['label'], (string) $value, $field);
-                break;
-            case 'wysiwyg':
-                ccc_render_wysiwyg($key, $field['label'], (string) $value, $field);
-                break;
-            case 'image':
-                ccc_render_image($key, $field['label'], $value);
-                break;
-            case 'number':
-                ccc_render_number($key, $field['label'], $value, $field);
-                break;
-            case 'boolean':
-                ccc_render_boolean($key, $field['label'], (bool) $value);
-                break;
-            case 'relation':
-                ccc_render_relation($key, $field['label'], $field['post_type'], $value, $field);
-                break;
-            case 'repeater':
-                ccc_render_repeater($key, $field['label'], is_array($value) ? $value : [], $field['subfields']);
-                break;
-        }
-    }
+    ccc_render_fields_collection($definition['fields'], $post->ID);
 }
 
 function ccc_save_casino_fields(int $post_id, WP_Post $post): void
@@ -175,4 +150,4 @@ function ccc_save_casino_fields(int $post_id, WP_Post $post): void
         }
     }
 }
-add_action('save_post', 'ccc_save_casino_fields', 10, 2);
+add_action('save_post_casino', 'ccc_save_casino_fields', 10, 2);

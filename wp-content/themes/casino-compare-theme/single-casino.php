@@ -53,10 +53,11 @@ $money_page_links = function_exists('ccc_get_money_pages_for_casino') ? ccc_get_
         <?php get_template_part('template-parts/info-table', null, ['rows' => $info_rows]); ?>
 
         <?php for ($i = 1; $i <= 5; $i++) : ?>
+            <?php $summary_title = (string) cct_get_meta('summary_' . $i . '_title', $casino_id); ?>
             <?php $summary = (string) cct_get_meta('summary_' . $i, $casino_id); ?>
-            <?php if (!cct_has_content($summary)) : continue; endif; ?>
+            <?php if (!cct_has_content($summary_title) || !cct_has_content($summary)) : continue; endif; ?>
             <section>
-                <h2><?php echo esc_html(sprintf(__('Summary %d', 'casino-compare-theme'), $i)); ?></h2>
+                <h2><?php echo esc_html($summary_title); ?></h2>
                 <div><?php echo wp_kses_post($summary); ?></div>
             </section>
         <?php endfor; ?>

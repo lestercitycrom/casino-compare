@@ -73,6 +73,25 @@ function ccc_get_seo_image_url(?int $post_id = null): string
     return '';
 }
 
+function ccc_get_og_type(?int $post_id = null): string
+{
+    $post_id = $post_id ?: get_queried_object_id();
+
+    if ($post_id <= 0) {
+        return 'article';
+    }
+
+    if (get_post_type($post_id) === 'landing') {
+        $landing_type = (string) get_post_meta($post_id, 'landing_type', true);
+
+        if (in_array($landing_type, ['hub', 'trust'], true)) {
+            return 'website';
+        }
+    }
+
+    return 'article';
+}
+
 function ccc_filter_document_title(string $title): string
 {
     if (!is_singular(['casino', 'casino_subpage', 'landing', 'guide'])) {
@@ -102,7 +121,7 @@ function ccc_output_seo_meta(): void
 
     echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
     echo '<link rel="canonical" href="' . esc_url($canonical) . '">' . "\n";
-    echo '<meta property="og:type" content="article">' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr(ccc_get_og_type($post_id)) . '">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
     echo '<meta property="og:url" content="' . esc_url($canonical) . '">' . "\n";

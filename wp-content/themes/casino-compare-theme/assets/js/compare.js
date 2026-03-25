@@ -33,38 +33,63 @@
         return !exists;
     };
 
+    const renderEmptyState = (app) => {
+        app.replaceChildren();
+        const message = document.createElement('p');
+        message.textContent = 'No casinos selected.';
+        app.appendChild(message);
+    };
+
     const renderCompareTable = (app, payload) => {
         const items = payload.items || [];
         const fields = payload.fields || {};
 
         if (!items.length) {
-            app.innerHTML = '<p>No casinos selected.</p>';
+            renderEmptyState(app);
             return;
         }
 
-        const headerCells = items.map((item) => `
-            <th>
-                <div>${item.title || ''}</div>
-                <button type="button" data-ccc-remove-compare-id="${item.id}">Remove</button>
-            </th>
-        `).join('');
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const headRow = document.createElement('tr');
+        const fieldHeader = document.createElement('th');
+        fieldHeader.textContent = 'Field';
+        headRow.appendChild(fieldHeader);
 
-        const bodyRows = Object.entries(fields).map(([fieldKey, fieldLabel]) => {
-            const values = items.map((item) => `<td>${item[fieldKey] || ''}</td>`).join('');
-            return `<tr><th>${fieldLabel}</th>${values}</tr>`;
-        }).join('');
+        items.forEach((item) => {
+            const itemHeader = document.createElement('th');
+            const title = document.createElement('div');
+            title.textContent = item.title || '';
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.setAttribute('data-ccc-remove-compare-id', String(item.id));
+            removeButton.textContent = 'Remove';
+            itemHeader.append(title, removeButton);
+            headRow.appendChild(itemHeader);
+        });
 
-        app.innerHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>Field</th>
-                        ${headerCells}
-                    </tr>
-                </thead>
-                <tbody>${bodyRows}</tbody>
-            </table>
-        `;
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+
+        Object.entries(fields).forEach(([fieldKey, fieldLabel]) => {
+            const row = document.createElement('tr');
+            const labelCell = document.createElement('th');
+            labelCell.textContent = String(fieldLabel);
+            row.appendChild(labelCell);
+
+            items.forEach((item) => {
+                const valueCell = document.createElement('td');
+                valueCell.textContent = item[fieldKey] || '';
+                row.appendChild(valueCell);
+            });
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        app.replaceChildren(table);
     };
 
     const renderCompareApp = (app) => {
@@ -75,7 +100,7 @@
         }
 
         if (!ids.length) {
-            app.innerHTML = '<p>No casinos selected.</p>';
+            renderEmptyState(app);
             return;
         }
 
@@ -89,7 +114,7 @@
 
         if (compareButton) {
             const added = toggleId(Number(compareButton.getAttribute('data-ccc-compare-id')));
-            compareButton.textContent = added ? 'Ajoute ✓' : 'Comparer';
+            compareButton.textContent = added ? 'Added' : 'Comparer';
             return;
         }
 

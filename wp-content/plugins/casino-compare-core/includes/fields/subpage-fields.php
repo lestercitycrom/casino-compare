@@ -44,19 +44,19 @@ function ccc_get_phase_one_subpage_types(): array
 function ccc_get_subpage_field_map(): array
 {
     return [
-        'parent_casino' => ['type' => 'relation'],
-        'subpage_type' => ['type' => 'text'],
-        'hero_title' => ['type' => 'text'],
-        'intro_text' => ['type' => 'textarea'],
-        'main_content' => ['type' => 'wysiwyg'],
-        'cta_text' => ['type' => 'text'],
-        'cta_url' => ['type' => 'text'],
-        'score_enabled' => ['type' => 'boolean'],
-        'score_value' => ['type' => 'number'],
-        'score_label' => ['type' => 'text'],
-        'table_enabled' => ['type' => 'boolean'],
-        'table_headers' => ['type' => 'repeater', 'subfields' => ['label' => __('Header', 'casino-compare-core')]],
-        'table_rows' => ['type' => 'repeater', 'subfields' => [
+        'parent_casino' => ['label' => __('Parent Casino', 'casino-compare-core'), 'type' => 'relation', 'layout' => 'half', 'post_type' => 'casino'],
+        'subpage_type' => ['label' => __('Subpage Type', 'casino-compare-core'), 'type' => 'select', 'layout' => 'half', 'options' => ccc_get_subpage_types(), 'placeholder' => __('Select type', 'casino-compare-core')],
+        'hero_title' => ['label' => __('Hero Title', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
+        'intro_text' => ['label' => __('Intro Text', 'casino-compare-core'), 'type' => 'textarea'],
+        'main_content' => ['label' => __('Main Content', 'casino-compare-core'), 'type' => 'wysiwyg'],
+        'cta_text' => ['label' => __('CTA Text', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+        'cta_url' => ['label' => __('CTA URL', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+        'score_enabled' => ['label' => __('Enable Score Block', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'full'],
+        'score_value' => ['label' => __('Score Value', 'casino-compare-core'), 'type' => 'number', 'layout' => 'half', 'step' => '0.1'],
+        'score_label' => ['label' => __('Score Label', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+        'table_enabled' => ['label' => __('Enable Table Block', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'full'],
+        'table_headers' => ['label' => __('Table Headers', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['label' => __('Header', 'casino-compare-core')]],
+        'table_rows' => ['label' => __('Table Rows', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => [
             'col_1' => ['label' => __('Column 1', 'casino-compare-core'), 'type' => 'text'],
             'col_2' => ['label' => __('Column 2', 'casino-compare-core'), 'type' => 'text'],
             'col_3' => ['label' => __('Column 3', 'casino-compare-core'), 'type' => 'text'],
@@ -64,9 +64,9 @@ function ccc_get_subpage_field_map(): array
             'col_5' => ['label' => __('Column 5', 'casino-compare-core'), 'type' => 'text'],
             'col_6' => ['label' => __('Column 6', 'casino-compare-core'), 'type' => 'text'],
         ]],
-        'faq' => ['type' => 'repeater', 'subfields' => ['question' => __('Question', 'casino-compare-core'), 'answer' => __('Answer', 'casino-compare-core')]],
-        'seo_title' => ['type' => 'text'],
-        'meta_description' => ['type' => 'textarea'],
+        'faq' => ['label' => __('FAQ', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['question' => __('Question', 'casino-compare-core'), 'answer' => __('Answer', 'casino-compare-core')]],
+        'seo_title' => ['label' => __('SEO Title', 'casino-compare-core'), 'type' => 'text'],
+        'meta_description' => ['label' => __('Meta Description', 'casino-compare-core'), 'type' => 'textarea'],
     ];
 }
 
@@ -81,48 +81,51 @@ add_action('add_meta_boxes_casino_subpage', 'ccc_register_subpage_meta_boxes');
 
 function ccc_render_subpage_main_box(WP_Post $post): void
 {
-    wp_nonce_field('ccc_save_subpage_fields', 'ccc_subpage_nonce');
-
-    ccc_render_relation('parent_casino', __('Parent Casino', 'casino-compare-core'), 'casino', ccc_get_meta_value($post->ID, 'parent_casino'));
-
-    $subpage_type = (string) ccc_get_meta_value($post->ID, 'subpage_type');
-    echo '<p><label for="subpage_type"><strong>' . esc_html__('Subpage Type', 'casino-compare-core') . '</strong></label><br><select class="widefat" id="subpage_type" name="subpage_type">';
-    echo '<option value="">' . esc_html__('Select type', 'casino-compare-core') . '</option>';
-    foreach (ccc_get_subpage_types() as $value => $label) {
-        echo '<option value="' . esc_attr($value) . '"' . selected($subpage_type, $value, false) . '>' . esc_html($label) . '</option>';
-    }
-    echo '</select></p>';
-
-    ccc_render_text('hero_title', __('Hero Title', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'hero_title'));
-    ccc_render_textarea('intro_text', __('Intro Text', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'intro_text'), ['rows' => 5]);
-    ccc_render_wysiwyg('main_content', __('Main Content', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'main_content'));
-    ccc_render_text('cta_text', __('CTA Text', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'cta_text'));
-    ccc_render_text('cta_url', __('CTA URL', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'cta_url'));
+    ccc_render_meta_box_nonce('ccc_save_subpage_fields', 'ccc_subpage_nonce');
+    ccc_render_fields_collection(ccc_expand_field_map([
+        'parent_casino' => ccc_get_subpage_field_map()['parent_casino'],
+        'subpage_type' => ccc_get_subpage_field_map()['subpage_type'],
+        'hero_title' => ccc_get_subpage_field_map()['hero_title'],
+        'intro_text' => ccc_get_subpage_field_map()['intro_text'],
+        'main_content' => ccc_get_subpage_field_map()['main_content'],
+        'cta_text' => ccc_get_subpage_field_map()['cta_text'],
+        'cta_url' => ccc_get_subpage_field_map()['cta_url'],
+    ]), $post->ID);
 }
 
 function ccc_render_subpage_score_box(WP_Post $post): void
 {
-    ccc_render_boolean('score_enabled', __('Enable Score Block', 'casino-compare-core'), (bool) ccc_get_meta_value($post->ID, 'score_enabled'));
+    ccc_admin_grid_open();
+    ccc_render_boolean('score_enabled', __('Enable Score Block', 'casino-compare-core'), (bool) ccc_get_meta_value($post->ID, 'score_enabled'), ccc_get_subpage_field_map()['score_enabled']);
     echo '<div data-ccc-condition-field="score_enabled" data-ccc-condition-value="1">';
-    ccc_render_number('score_value', __('Score Value', 'casino-compare-core'), ccc_get_meta_value($post->ID, 'score_value'), ['step' => '0.1']);
-    ccc_render_text('score_label', __('Score Label', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'score_label'));
+    ccc_admin_grid_open();
+    ccc_render_number('score_value', __('Score Value', 'casino-compare-core'), ccc_get_meta_value($post->ID, 'score_value'), ccc_get_subpage_field_map()['score_value']);
+    ccc_render_text('score_label', __('Score Label', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'score_label'), ccc_get_subpage_field_map()['score_label']);
+    ccc_admin_grid_close();
     echo '</div>';
+    ccc_admin_grid_close();
 }
 
 function ccc_render_subpage_table_box(WP_Post $post): void
 {
-    ccc_render_boolean('table_enabled', __('Enable Table Block', 'casino-compare-core'), (bool) ccc_get_meta_value($post->ID, 'table_enabled'));
+    ccc_admin_grid_open();
+    ccc_render_boolean('table_enabled', __('Enable Table Block', 'casino-compare-core'), (bool) ccc_get_meta_value($post->ID, 'table_enabled'), ccc_get_subpage_field_map()['table_enabled']);
     echo '<div data-ccc-condition-field="table_enabled" data-ccc-condition-value="1">';
-    ccc_render_repeater('table_headers', __('Table Headers', 'casino-compare-core'), (array) ccc_get_meta_value($post->ID, 'table_headers', []), ccc_get_subpage_field_map()['table_headers']['subfields']);
-    ccc_render_repeater('table_rows', __('Table Rows', 'casino-compare-core'), (array) ccc_get_meta_value($post->ID, 'table_rows', []), ccc_get_subpage_field_map()['table_rows']['subfields']);
+    ccc_admin_grid_open();
+    ccc_render_repeater('table_headers', __('Table Headers', 'casino-compare-core'), (array) ccc_get_meta_value($post->ID, 'table_headers', []), ccc_get_subpage_field_map()['table_headers']['subfields'], ccc_get_subpage_field_map()['table_headers']);
+    ccc_render_repeater('table_rows', __('Table Rows', 'casino-compare-core'), (array) ccc_get_meta_value($post->ID, 'table_rows', []), ccc_get_subpage_field_map()['table_rows']['subfields'], ccc_get_subpage_field_map()['table_rows']);
+    ccc_admin_grid_close();
     echo '</div>';
+    ccc_admin_grid_close();
 }
 
 function ccc_render_subpage_seo_box(WP_Post $post): void
 {
-    ccc_render_repeater('faq', __('FAQ', 'casino-compare-core'), (array) ccc_get_meta_value($post->ID, 'faq', []), ['question' => __('Question', 'casino-compare-core'), 'answer' => __('Answer', 'casino-compare-core')]);
-    ccc_render_text('seo_title', __('SEO Title', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'seo_title'));
-    ccc_render_textarea('meta_description', __('Meta Description', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'meta_description'), ['rows' => 3]);
+    ccc_render_fields_collection(ccc_expand_field_map([
+        'faq' => ccc_get_subpage_field_map()['faq'],
+        'seo_title' => ccc_get_subpage_field_map()['seo_title'],
+        'meta_description' => ccc_get_subpage_field_map()['meta_description'],
+    ]), $post->ID);
 }
 
 function ccc_save_subpage_fields(int $post_id, WP_Post $post): void
@@ -149,7 +152,7 @@ function ccc_save_subpage_fields(int $post_id, WP_Post $post): void
         update_post_meta($post_id, $key, ccc_sanitize_field($type, wp_unslash($raw), $field));
     }
 }
-add_action('save_post', 'ccc_save_subpage_fields', 10, 2);
+add_action('save_post_casino_subpage', 'ccc_save_subpage_fields', 10, 2);
 
 function ccc_seed_phase_one_subpages(int $post_id, WP_Post $post): void
 {
@@ -191,4 +194,4 @@ function ccc_seed_phase_one_subpages(int $post_id, WP_Post $post): void
 
     update_post_meta($post_id, '_ccc_phase_one_subpages_seeded', 1);
 }
-add_action('save_post', 'ccc_seed_phase_one_subpages', 20, 2);
+add_action('save_post_casino', 'ccc_seed_phase_one_subpages', 20, 2);

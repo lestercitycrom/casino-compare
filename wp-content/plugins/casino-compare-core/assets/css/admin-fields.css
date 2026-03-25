@@ -1,0 +1,190 @@
+.ccc-admin-screen #poststuff .postbox {
+    border: 1px solid #d7dce4;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(18, 26, 38, 0.04);
+}
+
+.ccc-admin-screen #poststuff .postbox .hndle,
+.ccc-admin-screen #poststuff .stuffbox .hndle {
+    background: #f6f8fb;
+    border-bottom: 1px solid #e3e8ef;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 14px 16px;
+}
+
+.ccc-admin-screen #poststuff .inside {
+    padding: 16px;
+    margin: 0;
+}
+
+.ccc-admin-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.ccc-admin-field {
+    grid-column: span 6;
+}
+
+.ccc-admin-field--full,
+.ccc-admin-field--textarea,
+.ccc-admin-field--wysiwyg,
+.ccc-admin-field--image {
+    grid-column: 1 / -1;
+}
+
+.ccc-admin-field--third {
+    grid-column: span 4;
+}
+
+.ccc-admin-field--inline {
+    grid-column: span 6;
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+}
+
+.ccc-admin-field__label,
+.ccc-repeater-cell__label {
+    display: block;
+    margin-bottom: 6px;
+    color: #1d2327;
+    font-size: 12px;
+}
+
+.ccc-admin-field input[type="text"],
+.ccc-admin-field input[type="number"],
+.ccc-admin-field select,
+.ccc-admin-field textarea {
+    min-height: 40px;
+}
+
+.ccc-admin-field textarea {
+    min-height: 96px;
+}
+
+.ccc-admin-field .description {
+    margin: 6px 0 0;
+}
+
+.ccc-admin-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.ccc-image-field {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 82px;
+    padding: 14px;
+    border: 1px dashed #c3ccd8;
+    border-radius: 10px;
+    background: #fbfcfe;
+}
+
+.ccc-image-preview {
+    width: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #d7dce4;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ccc-image-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ccc-repeater {
+    display: block;
+}
+
+.ccc-repeater-rows {
+    display: grid;
+    gap: 12px;
+}
+
+.ccc-repeater-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid #d7dce4;
+    border-radius: 10px;
+    background: #fbfcfe;
+}
+
+.ccc-repeater-row__fields {
+    display: grid;
+    gap: 12px;
+    flex: 1;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.ccc-repeater-cell {
+    grid-column: 1 / -1;
+}
+
+.ccc-repeater-cell--half {
+    grid-column: span 6;
+}
+
+.ccc-repeater-cell--third {
+    grid-column: span 4;
+}
+
+.ccc-remove-row {
+    color: #b32d2e;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-top: 24px;
+}
+
+.ccc-repeater__actions {
+    margin: 12px 0 0;
+}
+
+.ccc-admin-screen #side-sortables .ccc-admin-grid,
+.ccc-admin-screen .side .ccc-admin-grid {
+    grid-template-columns: 1fr;
+}
+
+.ccc-admin-screen #side-sortables .ccc-admin-field,
+.ccc-admin-screen .side .ccc-admin-field,
+.ccc-admin-screen #side-sortables .ccc-admin-field--inline,
+.ccc-admin-screen .side .ccc-admin-field--inline {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 1200px) {
+    .ccc-admin-field,
+    .ccc-admin-field--third,
+    .ccc-admin-field--inline {
+        grid-column: span 12;
+    }
+
+    .ccc-repeater-cell--half,
+    .ccc-repeater-cell--third {
+        grid-column: 1 / -1;
+    }
+
+    .ccc-repeater-row {
+        flex-direction: column;
+    }
+
+    .ccc-remove-row {
+        margin-top: 0;
+    }
+}

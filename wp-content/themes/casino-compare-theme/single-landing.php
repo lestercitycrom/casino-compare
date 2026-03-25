@@ -12,6 +12,8 @@ $landing_id = get_the_ID();
 $landing_type = (string) cct_get_meta('landing_type', $landing_id);
 $faq = cct_get_meta('faq', $landing_id, []);
 $cross_silo_links = function_exists('ccc_get_cross_silo_links') ? ccc_get_cross_silo_links($landing_id) : [];
+$trust_author_name = (string) (cct_get_meta('trust_author_name', $landing_id) ?: cct_get_meta('author_name', $landing_id));
+$trust_last_updated = (string) (cct_get_meta('trust_last_updated', $landing_id) ?: cct_get_meta('last_updated', $landing_id));
 $comparison_badges = array_values(array_filter([
     cct_get_meta('last_updated', $landing_id),
     cct_get_meta('author_name', $landing_id),
@@ -118,7 +120,7 @@ $has_active_filters = (bool) array_filter($filter_params, static fn($value) => $
             <section>
                 <div><?php echo wp_kses_post((string) cct_get_meta('page_content', $landing_id)); ?></div>
                 <?php if ((bool) cct_get_meta('show_author', $landing_id)) : ?>
-                    <p><?php echo esc_html((string) cct_get_meta('author_name', $landing_id)); ?><?php if (cct_has_content(cct_get_meta('last_updated', $landing_id))) : ?> · <?php echo esc_html((string) cct_get_meta('last_updated', $landing_id)); ?><?php endif; ?></p>
+                    <p><?php echo esc_html($trust_author_name); ?><?php if (cct_has_content($trust_last_updated)) : ?> · <?php echo esc_html($trust_last_updated); ?><?php endif; ?></p>
                 <?php endif; ?>
             </section>
         <?php endif; ?>

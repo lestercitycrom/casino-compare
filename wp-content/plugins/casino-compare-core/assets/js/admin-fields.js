@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const buildRepeaterControl = (key, index, subfieldKey, subfield) => {
         const fieldName = `${key}[${index}][${subfieldKey}]`;
         const fieldType = subfield.type || 'text';
+        const cell = document.createElement('div');
+        cell.className = `ccc-repeater-cell ccc-repeater-cell--${subfield.layout || 'full'} ccc-repeater-cell--${fieldType}`;
+
+        const label = document.createElement('label');
+        label.className = 'ccc-repeater-cell__label';
+        label.textContent = subfield.label || '';
+        cell.appendChild(label);
 
         if (fieldType === 'textarea') {
             const textarea = document.createElement('textarea');
@@ -24,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             textarea.name = fieldName;
             textarea.rows = String(subfield.rows || 3);
             textarea.placeholder = subfield.label || '';
-            return textarea;
+            cell.appendChild(textarea);
+            return cell;
         }
 
         if (fieldType === 'relation' && Array.isArray(subfield.options)) {
@@ -44,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 select.appendChild(element);
             });
 
-            return select;
+            cell.appendChild(select);
+            return cell;
         }
 
         const input = document.createElement('input');
@@ -57,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             input.step = String(subfield.step);
         }
 
-        return input;
+        cell.appendChild(input);
+
+        return cell;
     };
 
     document.addEventListener('change', updateConditionals);
@@ -103,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (preview) {
                     preview.innerHTML = attachment.sizes?.thumbnail
-                        ? `<img src="${attachment.sizes.thumbnail.url}" alt="" style="display:block;margin-bottom:8px;">`
+                        ? `<img src="${attachment.sizes.thumbnail.url}" alt="">`
                         : '';
                 }
             });
@@ -122,16 +133,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = document.createElement('div');
             row.className = 'ccc-repeater-row';
 
+            const fields = document.createElement('div');
+            fields.className = 'ccc-repeater-row__fields';
+
             Object.entries(subfields).forEach(([subfieldKey, subfield]) => {
-                row.appendChild(buildRepeaterControl(key, index, subfieldKey, subfield));
+                fields.appendChild(buildRepeaterControl(key, index, subfieldKey, subfield));
             });
 
             const remove = document.createElement('button');
             remove.type = 'button';
             remove.className = 'button-link-delete ccc-remove-row';
-            remove.textContent = 'Г—';
-            row.appendChild(remove);
+            remove.textContent = 'Remove';
+            remove.setAttribute('aria-label', 'Remove row');
 
+            row.appendChild(fields);
+            row.appendChild(remove);
             rowsContainer.appendChild(row);
         });
 

@@ -1,3 +1,18 @@
 .osp/
 flow/
 casino-compare.local.code-workspace
+
+# Local WordPress runtime
+wp-admin/
+wp-includes/
+wp-*.php
+index.php
+license.txt
+readme.html
+xmlrpc.php
+wp-config.php
+wp-config-sample.php
+wp-content/debug.log
+wp-content/index.php
+wp-content/plugins/index.php
+wp-content/themes/index.php

@@ -80,6 +80,46 @@ function ccc_find_landing_by_path(string $path): ?WP_Post
     return $landing instanceof WP_Post ? $landing : null;
 }
 
+function ccc_filter_landing_request(array $query_vars): array
+{
+    if (is_admin()) {
+        return $query_vars;
+    }
+
+    $path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+    $home_path = trim((string) wp_parse_url(home_url('/'), PHP_URL_PATH), '/');
+
+    if ($home_path !== '' && str_starts_with($path, $home_path . '/')) {
+        $path = substr($path, strlen($home_path) + 1);
+    }
+
+    if ($path === '') {
+        return $query_vars;
+    }
+
+    if (str_starts_with($path, 'wp-admin') || str_starts_with($path, 'wp-json')) {
+        return $query_vars;
+    }
+
+    $page = get_page_by_path($path, OBJECT, 'page');
+
+    if ($page instanceof WP_Post) {
+        return $query_vars;
+    }
+
+    $landing = ccc_find_landing_by_path(sanitize_text_field(wp_unslash($path)));
+
+    if (!$landing instanceof WP_Post) {
+        return $query_vars;
+    }
+
+    return [
+        'post_type' => 'landing',
+        'page_id' => $landing->ID,
+    ];
+}
+add_filter('request', 'ccc_filter_landing_request');
+
 function ccc_prepare_landing_query(WP_Query $query): void
 {
     if (is_admin() || !$query->is_main_query()) {

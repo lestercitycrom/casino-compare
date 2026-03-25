@@ -40,7 +40,10 @@ function cct_enqueue_assets(): void
             get_template_directory_uri() . '/assets/js/compare.js',
             [],
             $version,
-            true
+            [
+                'strategy' => 'defer',
+                'in_footer' => false,
+            ]
         );
     }
 
@@ -50,33 +53,22 @@ function cct_enqueue_assets(): void
             get_template_directory_uri() . '/assets/js/filter.js',
             [],
             $version,
-            true
+            [
+                'strategy' => 'defer',
+                'in_footer' => false,
+            ]
         );
     }
 
-    if ($needs_compare) {
-        wp_localize_script('cct-compare', 'cccTheme', [
-            'restUrl' => esc_url_raw(rest_url()),
-        ]);
-    }
+    $localize_handle = $needs_compare ? 'cct-compare' : ($needs_filter ? 'cct-filter' : '');
 
-    if ($needs_filter) {
-        wp_localize_script('cct-filter', 'cccTheme', [
+    if ($localize_handle !== '') {
+        wp_localize_script($localize_handle, 'cccTheme', [
             'restUrl' => esc_url_raw(rest_url()),
         ]);
     }
 }
 add_action('wp_enqueue_scripts', 'cct_enqueue_assets');
-
-function cct_defer_theme_scripts(string $tag, string $handle, string $src): string
-{
-    if (!in_array($handle, ['cct-compare', 'cct-filter'], true)) {
-        return $tag;
-    }
-
-    return sprintf('<script src="%s" defer></script>', esc_url($src));
-}
-add_filter('script_loader_tag', 'cct_defer_theme_scripts', 10, 3);
 
 function cct_get_meta(string $key, ?int $post_id = null, $default = '')
 {

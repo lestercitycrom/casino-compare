@@ -78,6 +78,10 @@ function ccc_get_review_schema(int $post_id): array
             'bestRating' => '5',
             'worstRating' => '0',
         ],
+        'author' => [
+            '@type' => 'Organization',
+            'name' => get_bloginfo('name'),
+        ],
         'name' => get_the_title($post_id),
         'description' => (string) get_post_meta($post_id, 'intro_text', true),
     ];

@@ -28,6 +28,7 @@ require_once CCC_PLUGIN_DIR . 'includes/fields/subpage-fields.php';
 require_once CCC_PLUGIN_DIR . 'includes/fields/landing-fields.php';
 require_once CCC_PLUGIN_DIR . 'includes/fields/guide-fields.php';
 require_once CCC_PLUGIN_DIR . 'includes/helpers/internal-links.php';
+require_once CCC_PLUGIN_DIR . 'includes/helpers/system-pages.php';
 require_once CCC_PLUGIN_DIR . 'includes/rest/compare-endpoint.php';
 require_once CCC_PLUGIN_DIR . 'includes/rest/filter-endpoint.php';
 require_once CCC_PLUGIN_DIR . 'includes/seo/breadcrumbs.php';
@@ -45,6 +46,7 @@ function ccc_activate_plugin(): void
 {
     ccc_register_plugin_hooks();
     ccc_seed_base_terms();
+    ccc_ensure_system_pages();
     flush_rewrite_rules();
 }
 register_activation_hook(CCC_PLUGIN_FILE, 'ccc_activate_plugin');

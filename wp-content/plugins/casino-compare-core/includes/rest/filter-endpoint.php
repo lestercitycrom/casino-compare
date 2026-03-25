@@ -66,9 +66,16 @@ function ccc_get_filter_query_args(array $params): array
     return $query_args;
 }
 
+function ccc_get_filter_cache_version(): int
+{
+    $version = (int) get_option('ccc_filter_cache_version', 1);
+
+    return $version > 0 ? $version : 1;
+}
+
 function ccc_render_filter_results(array $params): string
 {
-    $cache_key = 'ccc_filter_' . md5(serialize($params));
+    $cache_key = 'ccc_filter_v' . ccc_get_filter_cache_version() . '_' . md5(serialize($params));
     $cached = get_transient($cache_key);
 
     if (is_string($cached)) {
@@ -103,11 +110,10 @@ function ccc_handle_filter_endpoint(WP_REST_Request $request): WP_REST_Response
 
 function ccc_clear_filter_cache(int $post_id, WP_Post $post): void
 {
-    if ($post->post_type !== 'casino') {
+    if ($post->post_type !== 'casino' || wp_is_post_revision($post_id)) {
         return;
     }
 
-    global $wpdb;
-    $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_ccc_filter_%' OR option_name LIKE '_transient_timeout_ccc_filter_%'");
+    update_option('ccc_filter_cache_version', ccc_get_filter_cache_version() + 1);
 }
-add_action('save_post', 'ccc_clear_filter_cache', 30, 2);
+add_action('save_post_casino', 'ccc_clear_filter_cache', 30, 2);
