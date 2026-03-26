@@ -1,0 +1,1449 @@
+/* =====================================================
+   casino-compare-v2 — main.css
+   All component styles. Base/vars are in style.css.
+   ===================================================== */
+
+/* =====================================================
+   1. BASE ELEMENTS
+   ===================================================== */
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #f8fafc;
+}
+
+h2 {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 600;
+    color: #f8fafc;
+    line-height: 1.3;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+h4, h5, h6 {
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+p {
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+/* =====================================================
+   2. TYPOGRAPHY UTILITIES
+   ===================================================== */
+
+.eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #10b981;
+}
+
+.text-muted {
+    color: #64748b;
+}
+
+.text-soft {
+    color: #94a3b8;
+}
+
+.text-white {
+    color: #f8fafc;
+}
+
+.text-accent {
+    color: #10b981;
+}
+
+/* =====================================================
+   3. LAYOUT — SHELL & GRID
+   ===================================================== */
+
+.site-shell {
+    max-width: 1152px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.card-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+    .card-grid--3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .card-grid--3 {
+        grid-template-columns: 1fr;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   4. HEADER
+   ===================================================== */
+
+.site-header {
+    background: #0f172b;
+    border-bottom: 1px solid #334155;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 64px;
+}
+
+.site-logo {
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.site-logo__text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.site-logo__accent {
+    color: #10b981;
+}
+
+.site-nav {
+    display: flex;
+    gap: 24px;
+    margin-left: auto;
+}
+
+.site-nav__link {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.site-nav__link:hover {
+    color: #f8fafc;
+}
+
+.compare-badge {
+    background: #10b981;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.compare-badge:hover {
+    background: #059669;
+    color: white;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #f8fafc;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-left: auto;
+    padding: 4px 8px;
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .site-nav {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: #0f172b;
+        border-bottom: 1px solid #334155;
+        flex-direction: column;
+        padding: 16px 24px;
+        gap: 16px;
+        z-index: 99;
+    }
+
+    .site-nav.is-open {
+        display: flex;
+    }
+
+    .compare-badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+
+    .site-header__inner {
+        gap: 16px;
+    }
+}
+
+/* =====================================================
+   5. FOOTER
+   ===================================================== */
+
+.site-footer {
+    background: #0f172b;
+    border-top: 1px solid #334155;
+    padding: 48px 0 24px;
+    margin-top: 60px;
+}
+
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 32px;
+}
+
+.site-footer__heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #10b981;
+    margin-bottom: 12px;
+}
+
+.site-footer__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.site-footer__links a {
+    font-size: 0.875rem;
+    color: #64748b;
+    transition: color 0.2s;
+}
+
+.site-footer__links a:hover {
+    color: #f8fafc;
+}
+
+.site-footer__bottom {
+    border-top: 1px solid #334155;
+    padding-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .site-footer__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-footer__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   6. BUTTONS
+   ===================================================== */
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #10b981;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.btn-primary:hover {
+    background: #059669;
+    color: white;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #334155;
+    color: #f8fafc;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.btn-secondary:hover {
+    background: #475569;
+    color: #f8fafc;
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #10b981;
+    color: #10b981;
+    background: transparent;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.btn-outline:hover {
+    background: #10b981;
+    color: white;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+/* =====================================================
+   7. HERO SECTIONS
+   ===================================================== */
+
+.hero-home {
+    background: linear-gradient(135deg, #0f172b 0%, #1e293b 100%);
+    padding: 80px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.hero-home h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 16px;
+}
+
+.hero-home__lead {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-bottom: 32px;
+    color: #94a3b8;
+}
+
+.hero-home__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.single-hero {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 32px 0;
+    border-bottom: 1px solid #334155;
+    margin-bottom: 24px;
+}
+
+.single-hero--landing,
+.single-hero--guide {
+    display: block;
+    padding: 40px 0 32px;
+}
+
+.single-hero__logo img,
+.single-hero__logo .casino-card__logo-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: white;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.casino-logo-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: white;
+    padding: 8px;
+}
+
+.single-hero__info {
+    flex: 1;
+}
+
+.single-hero__info h1 {
+    margin-bottom: 10px;
+}
+
+.bonus-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+/* =====================================================
+   8. CASINO LAYOUT (single-casino.php)
+   ===================================================== */
+
+.casino-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+    align-items: start;
+}
+
+.casino-layout__aside {
+    position: sticky;
+    top: 80px;
+}
+
+.subpage-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid #334155;
+}
+
+.subpage-nav__label {
+    font-size: 0.8rem;
+    color: #64748b;
+    align-self: center;
+}
+
+.subpage-nav__link {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    transition: all 0.2s;
+}
+
+.subpage-nav__link:hover,
+.subpage-nav__link.is-active {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    margin-bottom: 20px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #f8fafc;
+}
+
+@media (max-width: 900px) {
+    .casino-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .casino-layout__aside {
+        position: static;
+    }
+}
+
+/* =====================================================
+   9. GUIDE LAYOUT (single-guide.php)
+   ===================================================== */
+
+.guide-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+    align-items: start;
+    margin: 24px 0;
+}
+
+.guide-layout__sidebar {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .guide-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-layout__sidebar {
+        position: static;
+    }
+}
+
+/* =====================================================
+   10. CASINO CARD
+   ===================================================== */
+
+.casino-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.casino-card:hover {
+    border-color: #10b981;
+}
+
+.casino-card__header {
+    background: #334155;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    position: relative;
+}
+
+.casino-card__rank {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #10b981;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.casino-card__logo {
+    flex-shrink: 0;
+}
+
+.casino-card__logo-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: white;
+    padding: 6px;
+    display: block;
+}
+
+.casino-card__logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background: #1e293b;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.casino-card__title-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+.casino-card__name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.casino-card__name a {
+    color: #f8fafc;
+    transition: color 0.2s;
+}
+
+.casino-card__name a:hover {
+    color: #10b981;
+}
+
+.casino-card__rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.casino-card__rating-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.casino-card__stars {
+    color: #eab308;
+    font-size: 0.9rem;
+}
+
+.casino-card__bonus {
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #334155;
+    min-height: 48px;
+}
+
+.casino-card__info {
+    padding: 0 16px;
+}
+
+.casino-card__review {
+    font-size: 0.8rem;
+    padding: 8px 0;
+    color: #94a3b8;
+}
+
+.casino-card__actions {
+    padding: 12px 16px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.casino-card__review-link {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.casino-card__review-link:hover {
+    color: #10b981;
+}
+
+/* =====================================================
+   11. BONUS TAG
+   ===================================================== */
+
+.bonus-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #10b981;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* =====================================================
+   12. META BADGES
+   ===================================================== */
+
+.meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #334155;
+    color: #94a3b8;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
+.meta-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* =====================================================
+   13. BREADCRUMB
+   ===================================================== */
+
+.breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    padding: 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.breadcrumb a {
+    color: #94a3b8;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #f8fafc;
+}
+
+.breadcrumb span + span::before {
+    content: ' > ';
+    margin: 0 4px;
+    color: #334155;
+}
+
+/* =====================================================
+   14. INFO TABLE
+   ===================================================== */
+
+.info-table {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.info-table__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #334155;
+    font-size: 0.875rem;
+    gap: 12px;
+}
+
+.info-table__row:last-child {
+    border-bottom: none;
+}
+
+.info-table__label {
+    color: #64748b;
+    flex-shrink: 0;
+}
+
+.info-table__value {
+    color: #f8fafc;
+    font-weight: 500;
+    text-align: right;
+}
+
+/* =====================================================
+   15. PROS / CONS
+   ===================================================== */
+
+.pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.pros-cons__list {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.pros-cons__list--pros {
+    border-left: 3px solid #10b981;
+}
+
+.pros-cons__list--cons {
+    border-left: 3px solid #ef4444;
+}
+
+.pros-cons__title {
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #f8fafc;
+    font-size: 0.9rem;
+}
+
+.pros-cons__item {
+    font-size: 0.875rem;
+    padding: 4px 0;
+    color: #94a3b8;
+    display: flex;
+    gap: 8px;
+}
+
+.pros-cons__list--pros .pros-cons__item::before {
+    content: '✓';
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.pros-cons__list--cons .pros-cons__item::before {
+    content: '✗';
+    color: #ef4444;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .pros-cons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   16. RATING BLOCK
+   ===================================================== */
+
+.rating-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.rating-block__score {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #10b981;
+    line-height: 1;
+}
+
+.rating-block__stars {
+    color: #eab308;
+    font-size: 1.2rem;
+}
+
+/* =====================================================
+   17. SCORE BLOCK
+   ===================================================== */
+
+.score-block {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #10b981;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.score-block__value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #10b981;
+    line-height: 1;
+}
+
+.score-block__label {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.score-block__verdict {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #f8fafc;
+}
+
+/* =====================================================
+   18. FAQ ACCORDION
+   ===================================================== */
+
+.faq {
+    margin: 40px 0;
+}
+
+.faq__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #f8fafc;
+    border-left: 3px solid #10b981;
+    padding-left: 12px;
+}
+
+.faq__item {
+    border-bottom: 1px solid #334155;
+}
+
+.faq__question {
+    padding: 16px 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    font-size: 0.95rem;
+}
+
+.faq__question::after {
+    content: '+';
+    color: #10b981;
+    font-size: 1.4rem;
+    line-height: 1;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.faq__item.is-open .faq__question::after {
+    content: '\2212'; /* − */
+}
+
+.faq__answer {
+    padding: 0 0 16px;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    display: none;
+    line-height: 1.7;
+}
+
+.faq__item.is-open .faq__answer {
+    display: block;
+}
+
+/* =====================================================
+   19. CONTENT PANELS & SECTIONS
+   ===================================================== */
+
+.content-section {
+    margin: 32px 0;
+}
+
+.content-section h2 {
+    border-left: 3px solid #10b981;
+    padding-left: 12px;
+    margin-bottom: 16px;
+}
+
+.content-panel {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+}
+
+.content-panel p {
+    color: #94a3b8;
+    margin-bottom: 12px;
+}
+
+.content-panel p:last-child {
+    margin-bottom: 0;
+}
+
+.content-panel--soft {
+    background: rgba(30, 41, 59, 0.5);
+}
+
+.content-panel--verdict {
+    border-left: 3px solid #10b981;
+}
+
+/* =====================================================
+   20. CTA BLOCK
+   ===================================================== */
+
+.cta-block {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.cta-block a {
+    display: inline-block;
+    background: #10b981;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.cta-block a:hover {
+    background: #059669;
+    color: white;
+}
+
+/* =====================================================
+   21. BONUS TABLE (subpages)
+   ===================================================== */
+
+.bonus-info-card {
+    background: #1e293b;
+    border: 1px solid #10b981;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.bonus-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.bonus-table th {
+    background: #334155;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    text-align: left;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.bonus-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #334155;
+    font-size: 0.875rem;
+    color: #f8fafc;
+}
+
+.bonus-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* =====================================================
+   22. COMPARE TABLE
+   ===================================================== */
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.compare-table th,
+.compare-table td {
+    padding: 12px 16px;
+    border: 1px solid #334155;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+.compare-table thead th {
+    background: #334155;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.compare-table tbody tr:nth-child(even) {
+    background: #1e293b;
+}
+
+.compare-table tbody tr:hover {
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.compare-app--empty {
+    padding: 40px;
+    text-align: center;
+}
+
+.compare-empty h2 {
+    color: #f8fafc;
+    margin-bottom: 12px;
+}
+
+.compare-empty p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   23. FILTER UI
+   ===================================================== */
+
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.filter-select {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.filter-select:focus {
+    outline: 1px solid #10b981;
+}
+
+.filter-pill {
+    display: inline-flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filter-pill a {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.filter-pill a:hover,
+.filter-pill a.is-active {
+    border-color: #10b981;
+    color: #10b981;
+}
+
+/* =====================================================
+   24. INTERNAL LINKS
+   ===================================================== */
+
+.internal-links {
+    margin: 32px 0;
+    padding-top: 24px;
+    border-top: 1px solid #334155;
+}
+
+/* =====================================================
+   25. HOMEPAGE SECTIONS
+   ===================================================== */
+
+.homepage-section {
+    padding: 60px 0;
+}
+
+.homepage-section--alt {
+    background: #1e293b;
+}
+
+.section-header {
+    margin-bottom: 32px;
+}
+
+.section-header h2 {
+    margin-top: 6px;
+}
+
+/* =====================================================
+   26. STATS BAND
+   ===================================================== */
+
+.stats-band {
+    background: linear-gradient(135deg, #10b981, #059669);
+    padding: 40px 0;
+    text-align: center;
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item__number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-item__label {
+    font-size: 0.875rem;
+    opacity: 0.85;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =====================================================
+   27. HOW IT WORKS
+   ===================================================== */
+
+.how-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.how-step {
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.how-step__number {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #10b981;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.how-step__title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #f8fafc;
+    font-size: 0.95rem;
+}
+
+.how-step__desc {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .how-steps {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .how-steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =====================================================
+   28. CATEGORY GRID
+   ===================================================== */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.category-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s;
+    display: block;
+    color: #f8fafc;
+}
+
+.category-card:hover {
+    border-color: #10b981;
+    transform: translateY(-2px);
+    color: #f8fafc;
+}
+
+.category-card__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 8px;
+    color: #f8fafc;
+}
+
+/* =====================================================
+   29. COMPARE PAGE
+   ===================================================== */
+
+.compare-page__article {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   30. SINGLE-CASINO HERO (detailed)
+   ===================================================== */
+
+.single-casino-page {
+    padding-top: 20px;
+}
+
+/* =====================================================
+   31. SUBCATEGORY GRID (landing/hub)
+   ===================================================== */
+
+.subcategory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.subcategory-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.2s;
+}
+
+.subcategory-card:hover {
+    border-color: #10b981;
+}
+
+.subcategory-card a {
+    font-weight: 600;
+    color: #f8fafc;
+    transition: color 0.2s;
+}
+
+.subcategory-card a:hover {
+    color: #10b981;
+}
+
+.subcategory-card p {
+    font-size: 0.8rem;
+    margin-top: 6px;
+}
+
+/* =====================================================
+   32. LANDING RESULTS
+   ===================================================== */
+
+.landing-results {
+    margin: 24px 0;
+}
+
+/* =====================================================
+   33. METHODOLOGY BLOCK
+   ===================================================== */
+
+.methodology-block {
+    border-left: 3px solid #10b981;
+}
+
+/* =====================================================
+   34. RESPONSIVE — GLOBAL OVERRIDES
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .hero-home {
+        padding: 48px 0;
+    }
+
+    .hero-home__actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .homepage-section {
+        padding: 40px 0;
+    }
+
+    .single-hero {
+        flex-direction: column;
+    }
+
+    .single-hero__logo img,
+    .single-hero__logo .casino-card__logo-placeholder,
+    .casino-logo-img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .casino-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .casino-layout__aside {
+        position: static;
+        order: -1;
+    }
+
+    .guide-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-layout__sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-shell {
+        padding: 0 16px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .casino-card__actions {
+        grid-template-columns: 1fr;
+    }
+
+    .casino-card__review-link {
+        grid-column: auto;
+    }
+}
