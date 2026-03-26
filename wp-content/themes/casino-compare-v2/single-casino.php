@@ -68,9 +68,16 @@ $subpage_labels = [
         <div class="single-hero__info">
             <h1><?php echo esc_html($title); ?></h1>
             <?php if ($rating) : ?>
+                <?php
+                $stars_full  = (int) round((float) $rating / 2);
+                $stars_full  = max(0, min(5, $stars_full));
+                $stars_empty = 5 - $stars_full;
+                ?>
                 <div class="rating-block">
                     <span class="rating-block__score"><?php echo esc_html($rating); ?></span>
-                    <span class="rating-block__stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                    <span class="rating-block__stars">
+                        <?php echo str_repeat('&#9733;', $stars_full) . str_repeat('&#9734;', $stars_empty); ?>
+                    </span>
                 </div>
             <?php endif; ?>
             <div class="bonus-tags">

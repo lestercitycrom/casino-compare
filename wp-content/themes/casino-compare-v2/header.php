@@ -18,15 +18,35 @@ if (!defined('ABSPATH')) {
 <header class="site-header">
     <div class="site-shell site-header__inner">
         <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
-            <span class="site-logo__text">Casino<span class="site-logo__accent">Compare</span></span>
+            <?php if (has_custom_logo()) : ?>
+                <?php the_custom_logo(); ?>
+            <?php else : ?>
+                <span class="site-logo__text"><?php bloginfo('name'); ?></span>
+            <?php endif; ?>
         </a>
         <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">&#9776;</button>
-        <nav class="site-nav" id="nav-menu" role="navigation" aria-label="<?php esc_attr_e('Navigation principale', 'casino-compare-v2'); ?>">
-            <a href="<?php echo esc_url(home_url('/casino-en-ligne/')); ?>" class="site-nav__link">Casinos</a>
-            <a href="<?php echo esc_url(home_url('/bonus-casino/')); ?>" class="site-nav__link">Bonus</a>
-            <a href="<?php echo esc_url(home_url('/jeux-casino/')); ?>" class="site-nav__link">Jeux</a>
-            <a href="<?php echo esc_url(home_url('/guide/')); ?>" class="site-nav__link">Guides</a>
-        </nav>
+        <?php
+        if (has_nav_menu('primary')) {
+            wp_nav_menu([
+                'theme_location' => 'primary',
+                'container'      => 'nav',
+                'container_class'=> 'site-nav',
+                'container_id'   => 'nav-menu',
+                'menu_class'     => '',
+                'depth'          => 1,
+                'items_wrap'     => '%3$s',
+            ]);
+        } else {
+            ?>
+            <nav class="site-nav" id="nav-menu" role="navigation">
+                <a href="<?php echo esc_url(home_url('/casino-en-ligne/')); ?>">Casinos</a>
+                <a href="<?php echo esc_url(home_url('/bonus-casino/')); ?>">Bonus</a>
+                <a href="<?php echo esc_url(home_url('/jeux-casino/')); ?>">Jeux</a>
+                <a href="<?php echo esc_url(home_url('/guide/')); ?>">Guides</a>
+            </nav>
+            <?php
+        }
+        ?>
         <a href="<?php echo esc_url(home_url('/comparer/')); ?>" class="compare-badge" id="ccc-compare-badge">Comparer (0)</a>
     </div>
 </header>

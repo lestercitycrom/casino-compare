@@ -44,9 +44,13 @@ $affiliate_link= (string) get_post_meta($casino_id, 'affiliate_link', true);
                 <a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($title); ?></a>
             </h3>
             <?php if ($rating !== '') : ?>
+                <?php
+                $s_full  = max(0, min(5, (int) round((float) $rating / 2)));
+                $s_empty = 5 - $s_full;
+                ?>
                 <div class="casino-card__rating">
                     <span class="casino-card__rating-score"><?php echo esc_html($rating); ?></span>
-                    <span class="casino-card__stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                    <span class="casino-card__stars"><?php echo str_repeat('&#9733;', $s_full) . str_repeat('&#9734;', $s_empty); ?></span>
                 </div>
             <?php endif; ?>
         </div>

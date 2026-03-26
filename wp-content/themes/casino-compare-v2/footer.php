@@ -9,6 +9,18 @@ if (!defined('ABSPATH')) {
 </div><!-- #page-wrap -->
 <footer class="site-footer">
     <div class="site-shell">
+        <?php if (has_nav_menu('footer')) : ?>
+        <div class="site-footer__nav-wrap">
+            <?php
+            wp_nav_menu([
+                'theme_location' => 'footer',
+                'container'      => false,
+                'menu_class'     => 'site-footer__links site-footer__links--nav',
+                'depth'          => 1,
+            ]);
+            ?>
+        </div>
+        <?php else : ?>
         <div class="site-footer__grid">
             <div>
                 <div class="site-footer__heading">Casinos</div>
@@ -43,9 +55,19 @@ if (!defined('ABSPATH')) {
                 </ul>
             </div>
         </div>
+        <?php endif; ?>
         <div class="site-footer__bottom">
-            <p class="text-muted">© 2026 CasinoCompare. Jouer comporte des risques. Réservé aux personnes majeures.</p>
-            <p class="text-muted" style="font-size:0.75rem;margin-top:8px">🔞 Jeu responsable | Ce site contient des liens affiliés</p>
+            <?php
+            $copyright = get_theme_mod('ccv2_footer_copyright', '');
+            if ($copyright !== '') {
+                echo '<p class="text-muted">' . esc_html($copyright) . '</p>';
+            } else {
+                $year      = gmdate('Y');
+                $site_name = get_bloginfo('name');
+                echo '<p class="text-muted">© ' . esc_html($year) . ' ' . esc_html($site_name) . '. Jouer comporte des risques. Réservé aux personnes majeures.</p>';
+            }
+            ?>
+            <p class="text-muted" style="font-size:0.75rem;margin-top:8px">Jeu responsable | Ce site contient des liens affiliés</p>
         </div>
     </div>
 </footer>

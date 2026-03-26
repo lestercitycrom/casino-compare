@@ -15,6 +15,12 @@ function ccv2_theme_setup(): void
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('html5', ['search-form', 'gallery', 'caption', 'script', 'style']);
+    add_theme_support('custom-logo', [
+        'height'      => 60,
+        'width'       => 220,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ]);
 
     register_nav_menus([
         'primary' => __('Primary Navigation', 'casino-compare-v2'),
@@ -193,6 +199,103 @@ function cct_get_first_guide_url(): string
 
     return (string) get_permalink((int) $posts[0]);
 }
+
+// =====================================================
+// WORDPRESS CUSTOMIZER
+// =====================================================
+
+/**
+ * Register Customizer sections, settings, and controls.
+ */
+function ccv2_customize_register(WP_Customize_Manager $wp_customize): void
+{
+    // ── Brand & Colors ───────────────────────────────────────────────────────
+    $wp_customize->add_section('ccv2_brand', [
+        'title'    => __('Brand & Colors', 'casino-compare-v2'),
+        'priority' => 25,
+    ]);
+
+    $wp_customize->add_setting('ccv2_accent_color', [
+        'default'           => '#10b981',
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'ccv2_accent_color', [
+        'label'       => __('Accent Color', 'casino-compare-v2'),
+        'description' => __('Main CTA/highlight color (buttons, links, accents).', 'casino-compare-v2'),
+        'section'     => 'ccv2_brand',
+    ]));
+
+    // ── Homepage Hero ────────────────────────────────────────────────────────
+    $wp_customize->add_section('ccv2_homepage', [
+        'title'    => __('Homepage Hero', 'casino-compare-v2'),
+        'priority' => 30,
+    ]);
+
+    $wp_customize->add_setting('ccv2_hero_title', [
+        'default'           => 'Trouvez le meilleur casino en ligne pour vous',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('ccv2_hero_title', [
+        'label'   => __('Hero Title', 'casino-compare-v2'),
+        'section' => 'ccv2_homepage',
+        'type'    => 'text',
+    ]);
+
+    $wp_customize->add_setting('ccv2_hero_subtitle', [
+        'default'           => 'Notre équipe teste et compare les meilleurs casinos pour vous aider à faire le bon choix.',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('ccv2_hero_subtitle', [
+        'label'   => __('Hero Subtitle', 'casino-compare-v2'),
+        'section' => 'ccv2_homepage',
+        'type'    => 'textarea',
+    ]);
+
+    // ── Footer ───────────────────────────────────────────────────────────────
+    $wp_customize->add_section('ccv2_footer', [
+        'title'    => __('Footer', 'casino-compare-v2'),
+        'priority' => 35,
+    ]);
+
+    $wp_customize->add_setting('ccv2_footer_copyright', [
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('ccv2_footer_copyright', [
+        'label'       => __('Footer Copyright Text', 'casino-compare-v2'),
+        'description' => __('Leave empty to auto-generate from site name.', 'casino-compare-v2'),
+        'section'     => 'ccv2_footer',
+        'type'        => 'text',
+    ]);
+}
+add_action('customize_register', 'ccv2_customize_register');
+
+/**
+ * Output dynamic CSS vars from Customizer settings.
+ * Overrides the :root defaults in style.css.
+ */
+function ccv2_customizer_head_css(): void
+{
+    $accent = get_theme_mod('ccv2_accent_color', '#10b981');
+    if ($accent === '#10b981') {
+        return; // default — no override needed
+    }
+    ?>
+<style id="ccv2-dynamic-css">
+:root {
+    --color-accent:       <?php echo esc_attr($accent); ?>;
+    --color-accent-hover: color-mix(in srgb, <?php echo esc_attr($accent); ?> 80%, black);
+}
+</style>
+    <?php
+}
+add_action('wp_head', 'ccv2_customizer_head_css');
+
+// =====================================================
 
 /**
  * Get the top N casinos sorted by overall_rating descending.

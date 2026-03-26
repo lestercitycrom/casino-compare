@@ -41,8 +41,8 @@ $latest_guides     = get_posts([
     <section class="hero-home">
         <div class="site-shell">
             <p class="eyebrow">Comparateur de casinos en ligne</p>
-            <h1>Trouvez le meilleur casino en ligne pour vous</h1>
-            <p class="hero-home__lead text-soft">Notre équipe teste et compare les meilleurs casinos pour vous aider à faire le bon choix.</p>
+            <h1><?php echo esc_html(get_theme_mod('ccv2_hero_title', 'Trouvez le meilleur casino en ligne pour vous')); ?></h1>
+            <p class="hero-home__lead text-soft"><?php echo esc_html(get_theme_mod('ccv2_hero_subtitle', 'Notre équipe teste et compare les meilleurs casinos pour vous aider à faire le bon choix.')); ?></p>
             <div class="hero-home__actions">
                 <a href="<?php echo esc_url(home_url('/casino-en-ligne/meilleur/')); ?>" class="btn-primary">Voir tous les casinos</a>
                 <a href="<?php echo esc_url(home_url('/comparer/')); ?>" class="btn-outline" id="ccc-compare-badge-home">Comparer (0)</a>
