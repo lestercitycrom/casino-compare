@@ -36,9 +36,15 @@ $quick_facts = array_filter([
     <?php if ($rank !== '') : ?>
         <p><strong>#<?php echo esc_html($rank); ?></strong></p>
     <?php endif; ?>
-    <?php if ($logo_id > 0) : ?>
-        <div class="casino-card__logo"><?php echo wp_kses_post(wp_get_attachment_image($logo_id, 'medium')); ?></div>
-    <?php endif; ?>
+    <div class="casino-card__logo">
+        <?php if ($logo_id > 0) : ?>
+            <?php echo wp_kses_post(wp_get_attachment_image($logo_id, 'medium')); ?>
+        <?php else : ?>
+            <span class="casino-card__logo-placeholder" aria-hidden="true">
+                <?php echo esc_html(mb_strtoupper(mb_substr($title, 0, 2))); ?>
+            </span>
+        <?php endif; ?>
+    </div>
     <h3><a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($title); ?></a></h3>
     <?php if ($rating !== '') : ?>
         <p><?php esc_html_e('Rating:', 'casino-compare-theme'); ?> <?php echo esc_html($rating); ?></p>
