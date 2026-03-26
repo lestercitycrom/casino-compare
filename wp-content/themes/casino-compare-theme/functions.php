@@ -159,12 +159,28 @@ function cct_get_first_guide_url(): string
 
 function cct_get_top_casinos(int $limit = 3): array
 {
-    return get_posts([
-        'post_type' => 'casino',
-        'post_status' => 'publish',
+    // First: casinos with a rating, sorted desc
+    $rated = get_posts([
+        'post_type'      => 'casino',
+        'post_status'    => 'publish',
         'posts_per_page' => $limit,
-        'meta_key' => 'overall_rating',
-        'orderby' => 'meta_value_num',
-        'order' => 'DESC',
+        'meta_key'       => 'overall_rating',
+        'orderby'        => 'meta_value_num',
+        'order'          => 'DESC',
     ]);
+    if (count($rated) >= $limit) {
+        return $rated;
+    }
+    // Fill remaining slots with unrated casinos
+    $rated_ids = array_column($rated, 'ID');
+    $unrated = get_posts([
+        'post_type'      => 'casino',
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit - count($rated),
+        'post__not_in'   => $rated_ids ?: [0],
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'meta_query'     => [['key' => 'overall_rating', 'compare' => 'NOT EXISTS']],
+    ]);
+    return array_merge($rated, $unrated);
 }
