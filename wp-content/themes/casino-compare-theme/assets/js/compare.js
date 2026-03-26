@@ -35,9 +35,15 @@
 
     const renderEmptyState = (app) => {
         app.replaceChildren();
+        app.className = 'compare-app compare-app--empty';
+        const wrap = document.createElement('div');
+        wrap.className = 'compare-empty';
+        const title = document.createElement('h2');
+        title.textContent = 'No casinos selected yet';
         const message = document.createElement('p');
-        message.textContent = 'No casinos selected.';
-        app.appendChild(message);
+        message.textContent = 'Add up to three casinos from review pages, landing cards or guide sidebars to build a side-by-side comparison.';
+        wrap.append(title, message);
+        app.appendChild(wrap);
     };
 
     const renderCompareTable = (app, payload) => {
@@ -49,7 +55,9 @@
             return;
         }
 
+        app.className = 'compare-app compare-app--loaded';
         const table = document.createElement('table');
+        table.className = 'compare-table';
         const thead = document.createElement('thead');
         const headRow = document.createElement('tr');
         const fieldHeader = document.createElement('th');
@@ -114,7 +122,7 @@
 
         if (compareButton) {
             const added = toggleId(Number(compareButton.getAttribute('data-ccc-compare-id')));
-            compareButton.textContent = added ? 'Added' : 'Comparer';
+            compareButton.textContent = added ? 'Ajouté ✓' : 'Comparer';
             return;
         }
 

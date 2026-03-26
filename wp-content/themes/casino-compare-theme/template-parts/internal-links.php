@@ -13,7 +13,7 @@ if ($links === []) {
     return;
 }
 ?>
-<nav aria-label="<?php esc_attr_e('Internal links', 'casino-compare-theme'); ?>">
+<nav class="internal-links" aria-label="<?php esc_attr_e('Internal links', 'casino-compare-theme'); ?>">
     <ul>
         <?php foreach ($links as $link) : ?>
             <li><a href="<?php echo esc_url((string) $link['url']); ?>"><?php echo esc_html((string) $link['label']); ?></a></li>

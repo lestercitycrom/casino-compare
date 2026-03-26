@@ -13,8 +13,8 @@ if ($pros === [] && $cons === []) {
     return;
 }
 ?>
-<section>
-    <div>
+<section class="pros-cons">
+    <div class="pros-cons__column">
         <?php if ($pros !== []) : ?>
             <h2><?php esc_html_e('Pros', 'casino-compare-theme'); ?></h2>
             <ul>
@@ -24,7 +24,7 @@ if ($pros === [] && $cons === []) {
             </ul>
         <?php endif; ?>
     </div>
-    <div>
+    <div class="pros-cons__column">
         <?php if ($cons !== []) : ?>
             <h2><?php esc_html_e('Cons', 'casino-compare-theme'); ?></h2>
             <ul>

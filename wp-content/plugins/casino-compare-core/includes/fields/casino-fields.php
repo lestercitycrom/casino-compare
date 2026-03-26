@@ -17,6 +17,8 @@ function ccc_get_casino_meta_boxes(): array
                 ['key' => 'year_founded', 'label' => __('Year Founded', 'casino-compare-core'), 'type' => 'number', 'layout' => 'third'],
                 ['key' => 'trustpilot_score', 'label' => __('Trustpilot Score', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
                 ['key' => 'app_available', 'label' => __('App Available', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'third'],
+                ['key' => 'last_updated', 'label' => __('Last Updated', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+                ['key' => 'author_name', 'label' => __('Author Name', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
             ],
         ],
         'ccc_casino_rating' => [
@@ -27,7 +29,7 @@ function ccc_get_casino_meta_boxes(): array
                 ['key' => 'rating_games', 'label' => __('Games Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
                 ['key' => 'rating_payments', 'label' => __('Payments Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
                 ['key' => 'rating_support', 'label' => __('Support Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
-                ['key' => 'rating_mobile', 'label' => __('Mobile Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
+                ['key' => 'rating_reliability', 'label' => __('Reliability Rating', 'casino-compare-core'), 'type' => 'number', 'step' => '0.1', 'layout' => 'third'],
             ],
         ],
         'ccc_casino_bonus' => [
@@ -48,6 +50,9 @@ function ccc_get_casino_meta_boxes(): array
                 ['key' => 'license', 'label' => __('License', 'casino-compare-core'), 'type' => 'text', 'layout' => 'third'],
                 ['key' => 'license_number', 'label' => __('License Number', 'casino-compare-core'), 'type' => 'text', 'layout' => 'third'],
                 ['key' => 'games_count', 'label' => __('Games Count', 'casino-compare-core'), 'type' => 'number', 'layout' => 'third'],
+                ['key' => 'support_channels', 'label' => __('Support Channels', 'casino-compare-core'), 'type' => 'textarea', 'rows' => 3],
+                ['key' => 'vip', 'label' => __('VIP Program', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+                ['key' => 'mobile_app', 'label' => __('Mobile App', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
                 ['key' => 'withdrawal_time_min', 'label' => __('Withdrawal Time Min', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'withdrawal_time_max', 'label' => __('Withdrawal Time Max', 'casino-compare-core'), 'type' => 'text'],
                 ['key' => 'providers', 'label' => __('Providers', 'casino-compare-core'), 'type' => 'repeater', 'layout' => 'full', 'subfields' => ['name' => __('Provider Name', 'casino-compare-core')]],

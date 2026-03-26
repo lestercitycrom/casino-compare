@@ -95,3 +95,76 @@ function cct_normalize_repeater($rows): array
 {
     return is_array($rows) ? array_values(array_filter($rows, static fn($row) => is_array($row) ? !empty(array_filter($row)) : !empty($row))) : [];
 }
+
+function cct_repeater_text_list($rows, string $key = 'name'): array
+{
+    $normalized = cct_normalize_repeater($rows);
+
+    return array_values(array_filter(array_map(static function ($row) use ($key): string {
+        return is_array($row) ? trim((string) ($row[$key] ?? '')) : '';
+    }, $normalized)));
+}
+
+function cct_normalize_link_rows($rows): array
+{
+    return array_values(array_filter(array_map(static function ($row): array {
+        if (!is_array($row)) {
+            return [];
+        }
+
+        return [
+            'label' => trim((string) ($row['label'] ?? $row['title'] ?? '')),
+            'url' => trim((string) ($row['url'] ?? '')),
+        ];
+    }, cct_normalize_repeater($rows)), static fn(array $row): bool => $row['label'] !== '' && $row['url'] !== ''));
+}
+
+function cct_get_first_landing_url(string $landing_type): string
+{
+    $posts = get_posts([
+        'post_type' => 'landing',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'meta_key' => 'landing_type',
+        'meta_value' => $landing_type,
+        'orderby' => 'menu_order title',
+        'order' => 'ASC',
+        'fields' => 'ids',
+    ]);
+
+    if ($posts === []) {
+        return '';
+    }
+
+    return (string) get_permalink((int) $posts[0]);
+}
+
+function cct_get_first_guide_url(): string
+{
+    $posts = get_posts([
+        'post_type' => 'guide',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'fields' => 'ids',
+    ]);
+
+    if ($posts === []) {
+        return '';
+    }
+
+    return (string) get_permalink((int) $posts[0]);
+}
+
+function cct_get_top_casinos(int $limit = 3): array
+{
+    return get_posts([
+        'post_type' => 'casino',
+        'post_status' => 'publish',
+        'posts_per_page' => $limit,
+        'meta_key' => 'overall_rating',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+    ]);
+}

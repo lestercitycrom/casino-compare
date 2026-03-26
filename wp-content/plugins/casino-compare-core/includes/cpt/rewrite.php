@@ -31,6 +31,26 @@ function ccc_register_rewrite_rules(): void
     );
 }
 
+function ccc_force_singular_query(WP_Query $query, WP_Post $post): void
+{
+    $query->set('post_type', $post->post_type);
+    $query->set('p', (int) $post->ID);
+    $query->set('page_id', 0);
+    $query->set('name', (string) $post->post_name);
+    $query->set('pagename', '');
+    $query->set('posts_per_page', 1);
+    $query->set('post__in', [(int) $post->ID]);
+    $query->set('meta_query', []);
+
+    $query->is_single = true;
+    $query->is_singular = true;
+    $query->is_page = false;
+    $query->is_home = false;
+    $query->is_archive = false;
+    $query->is_post_type_archive = false;
+    $query->is_404 = false;
+}
+
 function ccc_prepare_subpage_query(WP_Query $query): void
 {
     if (is_admin() || !$query->is_main_query()) {
@@ -52,18 +72,31 @@ function ccc_prepare_subpage_query(WP_Query $query): void
         return;
     }
 
-    $query->set('post_type', 'casino_subpage');
-    $query->set('posts_per_page', 1);
-    $query->set('meta_query', [
-        [
-            'key' => 'parent_casino',
-            'value' => (string) $casino->ID,
-        ],
-        [
-            'key' => 'subpage_type',
-            'value' => sanitize_key((string) $subpage_type),
+    $subpages = get_posts([
+        'post_type' => 'casino_subpage',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'meta_query' => [
+            [
+                'key' => 'parent_casino',
+                'value' => (string) $casino->ID,
+            ],
+            [
+                'key' => 'subpage_type',
+                'value' => sanitize_key((string) $subpage_type),
+            ],
         ],
     ]);
+
+    $subpage = $subpages[0] ?? null;
+
+    if (!$subpage instanceof WP_Post) {
+        $query->set_404();
+        status_header(404);
+        return;
+    }
+
+    ccc_force_singular_query($query, $subpage);
 }
 add_action('pre_get_posts', 'ccc_prepare_subpage_query');
 
@@ -115,7 +148,8 @@ function ccc_filter_landing_request(array $query_vars): array
 
     return [
         'post_type' => 'landing',
-        'page_id' => $landing->ID,
+        'p' => $landing->ID,
+        'name' => $landing->post_name,
     ];
 }
 add_filter('request', 'ccc_filter_landing_request');
@@ -138,11 +172,7 @@ function ccc_prepare_landing_query(WP_Query $query): void
         return;
     }
 
-    $query->set('post_type', 'landing');
-    $query->set('page_id', 0);
-    $query->set('name', '');
-    $query->set('pagename', '');
-    $query->set('p', $landing->ID);
+    ccc_force_singular_query($query, $landing);
 }
 add_action('pre_get_posts', 'ccc_prepare_landing_query', 20);
 

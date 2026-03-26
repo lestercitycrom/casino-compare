@@ -36,6 +36,17 @@ function ccc_get_landing_field_map(): array
         'subcategory_cards' => ['label' => __('Subcategory Cards', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['title' => __('Title', 'casino-compare-core'), 'url' => __('URL', 'casino-compare-core'), 'description' => __('Description', 'casino-compare-core'), 'icon' => __('Icon', 'casino-compare-core')]],
         'top_casino_list' => ['label' => __('Top Casino List', 'casino-compare-core'), 'type' => 'relation', 'max_items' => 9, 'post_type' => 'casino', 'multiple' => true, 'layout' => 'full'],
         'educational_content' => ['label' => __('Educational Content', 'casino-compare-core'), 'type' => 'wysiwyg'],
+        'comparison_table_title' => ['label' => __('Comparison Table Title', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
+        'comparison_table_headers' => ['label' => __('Comparison Table Headers', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['label' => __('Header', 'casino-compare-core')]],
+        'comparison_table_rows' => ['label' => __('Comparison Table Rows', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => [
+            'col_1' => ['label' => __('Column 1', 'casino-compare-core'), 'type' => 'text'],
+            'col_2' => ['label' => __('Column 2', 'casino-compare-core'), 'type' => 'text'],
+            'col_3' => ['label' => __('Column 3', 'casino-compare-core'), 'type' => 'text'],
+            'col_4' => ['label' => __('Column 4', 'casino-compare-core'), 'type' => 'text'],
+            'col_5' => ['label' => __('Column 5', 'casino-compare-core'), 'type' => 'text'],
+            'col_6' => ['label' => __('Column 6', 'casino-compare-core'), 'type' => 'text'],
+        ]],
+        'howto_title' => ['label' => __('How To Title', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
         'howto_content' => ['label' => __('How To Content', 'casino-compare-core'), 'type' => 'wysiwyg'],
         'cross_silo_links' => ['label' => __('Cross Silo Links', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['label' => __('Label', 'casino-compare-core'), 'url' => __('URL', 'casino-compare-core')]],
         'page_content' => ['label' => __('Page Content', 'casino-compare-core'), 'type' => 'wysiwyg'],
@@ -87,9 +98,14 @@ function ccc_render_landing_hub_box(WP_Post $post): void
 {
     echo '<div data-ccc-condition-field="landing_type" data-ccc-condition-value="hub">';
     ccc_render_fields_collection(ccc_expand_field_map([
+        'last_updated' => ccc_get_landing_field_map()['last_updated'],
         'subcategory_cards' => ccc_get_landing_field_map()['subcategory_cards'],
         'top_casino_list' => ccc_get_landing_field_map()['top_casino_list'],
         'educational_content' => ccc_get_landing_field_map()['educational_content'],
+        'comparison_table_title' => ccc_get_landing_field_map()['comparison_table_title'],
+        'comparison_table_headers' => ccc_get_landing_field_map()['comparison_table_headers'],
+        'comparison_table_rows' => ccc_get_landing_field_map()['comparison_table_rows'],
+        'howto_title' => ccc_get_landing_field_map()['howto_title'],
         'howto_content' => ccc_get_landing_field_map()['howto_content'],
         'cross_silo_links' => ccc_get_landing_field_map()['cross_silo_links'],
     ]), $post->ID);

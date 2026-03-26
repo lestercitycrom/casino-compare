@@ -19,6 +19,9 @@ $comparison_badges = array_values(array_filter([
     cct_get_meta('author_name', $landing_id),
     cct_get_meta('casinos_tested_count', $landing_id),
 ], static fn($value) => cct_has_content($value)));
+$hub_badges = array_values(array_filter([
+    cct_get_meta('last_updated', $landing_id),
+], static fn($value) => cct_has_content($value)));
 $filter_params = [
     'license' => (array) ($_GET['license'] ?? []),
     'feature' => (array) ($_GET['feature'] ?? []),
@@ -30,25 +33,51 @@ $has_active_filters = (bool) array_filter($filter_params, static fn($value) => $
 ?>
 <main class="site-shell">
     <?php get_template_part('template-parts/breadcrumb'); ?>
-    <article>
-        <h1><?php echo esc_html((string) (cct_get_meta('hero_title', $landing_id) ?: get_the_title())); ?></h1>
-
-        <?php if (cct_has_content(cct_get_meta('intro_text', $landing_id))) : ?>
-            <div><?php echo wp_kses_post(wpautop((string) cct_get_meta('intro_text', $landing_id))); ?></div>
-        <?php endif; ?>
+    <article class="single-single single-single--landing">
+        <header class="single-hero">
+            <div class="single-hero__main">
+                <h1><?php echo esc_html((string) (cct_get_meta('hero_title', $landing_id) ?: get_the_title())); ?></h1>
+                <?php if ($landing_type === 'comparison' && $comparison_badges !== []) : ?>
+                    <div class="meta-badges">
+                        <?php foreach ($comparison_badges as $badge) : ?>
+                            <span class="meta-badge"><?php echo esc_html((string) $badge); ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($landing_type === 'hub' && $hub_badges !== []) : ?>
+                    <div class="meta-badges">
+                        <?php foreach ($hub_badges as $badge) : ?>
+                            <span class="meta-badge"><?php echo esc_html((string) $badge); ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($landing_type === 'trust' && (cct_has_content($trust_author_name) || cct_has_content($trust_last_updated))) : ?>
+                    <div class="meta-badges">
+                        <?php if (cct_has_content($trust_author_name)) : ?>
+                            <span class="meta-badge"><?php echo esc_html($trust_author_name); ?></span>
+                        <?php endif; ?>
+                        <?php if (cct_has_content($trust_last_updated)) : ?>
+                            <span class="meta-badge"><?php echo esc_html($trust_last_updated); ?></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if (cct_has_content(cct_get_meta('intro_text', $landing_id))) : ?>
+                    <div class="content-panel content-panel--soft">
+                        <?php echo wp_kses_post(wpautop((string) cct_get_meta('intro_text', $landing_id))); ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </header>
 
         <?php if ($landing_type === 'comparison') : ?>
-            <?php if ($comparison_badges !== []) : ?>
-                <p><?php echo esc_html(implode(' · ', array_map('strval', $comparison_badges))); ?></p>
-            <?php endif; ?>
             <?php get_template_part('template-parts/filter-ui'); ?>
-            <div id="ccc-filter-results">
+            <div id="ccc-filter-results" class="landing-results">
                 <?php if ($has_active_filters && function_exists('ccc_render_filter_results')) : ?>
                     <?php echo ccc_render_filter_results($filter_params); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 <?php else : ?>
                     <?php $cards = cct_normalize_repeater(cct_get_meta('casino_cards', $landing_id, [])); ?>
                     <?php if ($cards !== []) : ?>
-                        <section>
+                        <section class="content-panel">
                             <?php foreach ($cards as $card) : ?>
                                 <?php get_template_part('template-parts/casino-card', null, [
                                     'casino_id' => (int) ($card['casino_id'] ?? 0),
@@ -66,7 +95,7 @@ $has_active_filters = (bool) array_filter($filter_params, static fn($value) => $
             ]); ?>
 
             <?php if (cct_has_content(cct_get_meta('bottom_content', $landing_id))) : ?>
-                <section>
+                <section class="content-panel">
                     <div><?php echo wp_kses_post((string) cct_get_meta('bottom_content', $landing_id)); ?></div>
                 </section>
             <?php endif; ?>
@@ -79,48 +108,98 @@ $has_active_filters = (bool) array_filter($filter_params, static fn($value) => $
         <?php if ($landing_type === 'hub') : ?>
             <?php $subcategories = cct_normalize_repeater(cct_get_meta('subcategory_cards', $landing_id, [])); ?>
             <?php if ($subcategories !== []) : ?>
-                <section>
+                <section class="content-panel">
                     <h2><?php esc_html_e('Subcategories', 'casino-compare-theme'); ?></h2>
-                    <ul>
+                    <div class="subcategory-grid">
                         <?php foreach ($subcategories as $card) : ?>
-                            <li>
+                            <article class="subcategory-card">
                                 <a href="<?php echo esc_url((string) ($card['url'] ?? '#')); ?>"><?php echo esc_html((string) ($card['title'] ?? '')); ?></a>
                                 <?php if (!empty($card['description'])) : ?>
                                     <p><?php echo esc_html((string) $card['description']); ?></p>
                                 <?php endif; ?>
-                            </li>
+                            </article>
                         <?php endforeach; ?>
-                    </ul>
+                    </div>
                 </section>
             <?php endif; ?>
 
             <?php $top_ids = array_map('intval', (array) cct_get_meta('top_casino_list', $landing_id, [])); ?>
             <?php if ($top_ids !== []) : ?>
-                <section>
+                <section class="content-panel">
                     <h2><?php esc_html_e('Top casinos', 'casino-compare-theme'); ?></h2>
-                    <?php foreach ($top_ids as $index => $casino_id) : ?>
-                        <?php get_template_part('template-parts/casino-card', null, [
-                            'casino_id' => $casino_id,
-                            'rank' => (string) ($index + 1),
-                        ]); ?>
-                    <?php endforeach; ?>
+                    <div class="homepage-card-grid">
+                        <?php foreach ($top_ids as $index => $casino_id) : ?>
+                            <?php get_template_part('template-parts/casino-card', null, [
+                                'casino_id' => $casino_id,
+                                'rank' => (string) ($index + 1),
+                            ]); ?>
+                        <?php endforeach; ?>
+                    </div>
                 </section>
             <?php endif; ?>
 
             <?php if (cct_has_content(cct_get_meta('educational_content', $landing_id))) : ?>
-                <section><div><?php echo wp_kses_post((string) cct_get_meta('educational_content', $landing_id)); ?></div></section>
+                <section class="content-panel"><div><?php echo wp_kses_post((string) cct_get_meta('educational_content', $landing_id)); ?></div></section>
             <?php endif; ?>
+
+            <?php $comparison_table_headers = cct_normalize_repeater(cct_get_meta('comparison_table_headers', $landing_id, [])); ?>
+            <?php $comparison_table_rows = cct_normalize_repeater(cct_get_meta('comparison_table_rows', $landing_id, [])); ?>
+            <?php if (cct_has_content(cct_get_meta('comparison_table_title', $landing_id)) || $comparison_table_headers !== [] || $comparison_table_rows !== []) : ?>
+                <section class="content-panel">
+                    <?php if (cct_has_content(cct_get_meta('comparison_table_title', $landing_id))) : ?>
+                        <h2><?php echo esc_html((string) cct_get_meta('comparison_table_title', $landing_id)); ?></h2>
+                    <?php endif; ?>
+                    <table>
+                        <?php if ($comparison_table_headers !== []) : ?>
+                            <thead>
+                                <tr>
+                                    <?php foreach ($comparison_table_headers as $header) : ?>
+                                        <th><?php echo esc_html((string) ($header['label'] ?? '')); ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                        <?php endif; ?>
+                        <?php if ($comparison_table_rows !== []) : ?>
+                            <tbody>
+                                <?php foreach ($comparison_table_rows as $row) : ?>
+                                    <tr>
+                                        <?php for ($column_index = 1; $column_index <= 6; $column_index++) : ?>
+                                            <?php $value = trim((string) ($row['col_' . $column_index] ?? '')); ?>
+                                            <?php if ($comparison_table_headers === [] && $value === '') : continue; endif; ?>
+                                            <td><?php echo esc_html($value); ?></td>
+                                        <?php endfor; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        <?php endif; ?>
+                    </table>
+                </section>
+            <?php endif; ?>
+
             <?php if (cct_has_content(cct_get_meta('howto_content', $landing_id))) : ?>
-                <section><div><?php echo wp_kses_post((string) cct_get_meta('howto_content', $landing_id)); ?></div></section>
+                <section class="content-panel">
+                    <?php if (cct_has_content(cct_get_meta('howto_title', $landing_id))) : ?>
+                        <h2><?php echo esc_html((string) cct_get_meta('howto_title', $landing_id)); ?></h2>
+                    <?php endif; ?>
+                    <div><?php echo wp_kses_post((string) cct_get_meta('howto_content', $landing_id)); ?></div>
+                </section>
             <?php endif; ?>
+
             <?php get_template_part('template-parts/internal-links', null, ['links' => $cross_silo_links]); ?>
         <?php endif; ?>
 
         <?php if ($landing_type === 'trust' && cct_has_content(cct_get_meta('page_content', $landing_id))) : ?>
-            <section>
+            <section class="content-panel">
                 <div><?php echo wp_kses_post((string) cct_get_meta('page_content', $landing_id)); ?></div>
                 <?php if ((bool) cct_get_meta('show_author', $landing_id)) : ?>
-                    <p><?php echo esc_html($trust_author_name); ?><?php if (cct_has_content($trust_last_updated)) : ?> · <?php echo esc_html($trust_last_updated); ?><?php endif; ?></p>
+                    <div class="meta-badges">
+                        <?php if (cct_has_content($trust_author_name)) : ?>
+                            <span class="meta-badge"><?php echo esc_html($trust_author_name); ?></span>
+                        <?php endif; ?>
+                        <?php if (cct_has_content($trust_last_updated)) : ?>
+                            <span class="meta-badge"><?php echo esc_html($trust_last_updated); ?></span>
+                        <?php endif; ?>
+                    </div>
                 <?php endif; ?>
             </section>
         <?php endif; ?>

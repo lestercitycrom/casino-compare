@@ -13,4 +13,4 @@ if ($text === '' || $url === '') {
     return;
 }
 ?>
-<p><a href="<?php echo esc_url($url); ?>"><?php echo esc_html($text); ?></a></p>
+<p class="cta-block"><a class="button-primary" href="<?php echo esc_url($url); ?>"><?php echo esc_html($text); ?></a></p>

@@ -46,14 +46,17 @@ function ccc_get_subpage_field_map(): array
     return [
         'parent_casino' => ['label' => __('Parent Casino', 'casino-compare-core'), 'type' => 'relation', 'layout' => 'half', 'post_type' => 'casino'],
         'subpage_type' => ['label' => __('Subpage Type', 'casino-compare-core'), 'type' => 'select', 'layout' => 'half', 'options' => ccc_get_subpage_types(), 'placeholder' => __('Select type', 'casino-compare-core')],
+        'parent_review_link' => ['label' => __('Parent Review Link', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
         'hero_title' => ['label' => __('Hero Title', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
         'intro_text' => ['label' => __('Intro Text', 'casino-compare-core'), 'type' => 'textarea'],
+        'last_updated' => ['label' => __('Last Updated', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
         'main_content' => ['label' => __('Main Content', 'casino-compare-core'), 'type' => 'wysiwyg'],
         'cta_text' => ['label' => __('CTA Text', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
         'cta_url' => ['label' => __('CTA URL', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
         'score_enabled' => ['label' => __('Enable Score Block', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'full'],
         'score_value' => ['label' => __('Score Value', 'casino-compare-core'), 'type' => 'number', 'layout' => 'half', 'step' => '0.1'],
         'score_label' => ['label' => __('Score Label', 'casino-compare-core'), 'type' => 'text', 'layout' => 'half'],
+        'score_verdict' => ['label' => __('Score Verdict', 'casino-compare-core'), 'type' => 'text', 'layout' => 'full'],
         'table_enabled' => ['label' => __('Enable Table Block', 'casino-compare-core'), 'type' => 'boolean', 'layout' => 'full'],
         'table_headers' => ['label' => __('Table Headers', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['label' => __('Header', 'casino-compare-core')]],
         'table_rows' => ['label' => __('Table Rows', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => [
@@ -64,6 +67,7 @@ function ccc_get_subpage_field_map(): array
             'col_5' => ['label' => __('Column 5', 'casino-compare-core'), 'type' => 'text'],
             'col_6' => ['label' => __('Column 6', 'casino-compare-core'), 'type' => 'text'],
         ]],
+        'architecture_links' => ['label' => __('Architecture Links', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['label' => __('Label', 'casino-compare-core'), 'url' => __('URL', 'casino-compare-core')]],
         'faq' => ['label' => __('FAQ', 'casino-compare-core'), 'type' => 'repeater', 'subfields' => ['question' => __('Question', 'casino-compare-core'), 'answer' => __('Answer', 'casino-compare-core')]],
         'seo_title' => ['label' => __('SEO Title', 'casino-compare-core'), 'type' => 'text'],
         'meta_description' => ['label' => __('Meta Description', 'casino-compare-core'), 'type' => 'textarea'],
@@ -85,8 +89,10 @@ function ccc_render_subpage_main_box(WP_Post $post): void
     ccc_render_fields_collection(ccc_expand_field_map([
         'parent_casino' => ccc_get_subpage_field_map()['parent_casino'],
         'subpage_type' => ccc_get_subpage_field_map()['subpage_type'],
+        'parent_review_link' => ccc_get_subpage_field_map()['parent_review_link'],
         'hero_title' => ccc_get_subpage_field_map()['hero_title'],
         'intro_text' => ccc_get_subpage_field_map()['intro_text'],
+        'last_updated' => ccc_get_subpage_field_map()['last_updated'],
         'main_content' => ccc_get_subpage_field_map()['main_content'],
         'cta_text' => ccc_get_subpage_field_map()['cta_text'],
         'cta_url' => ccc_get_subpage_field_map()['cta_url'],
@@ -101,6 +107,7 @@ function ccc_render_subpage_score_box(WP_Post $post): void
     ccc_admin_grid_open();
     ccc_render_number('score_value', __('Score Value', 'casino-compare-core'), ccc_get_meta_value($post->ID, 'score_value'), ccc_get_subpage_field_map()['score_value']);
     ccc_render_text('score_label', __('Score Label', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'score_label'), ccc_get_subpage_field_map()['score_label']);
+    ccc_render_text('score_verdict', __('Score Verdict', 'casino-compare-core'), (string) ccc_get_meta_value($post->ID, 'score_verdict'), ccc_get_subpage_field_map()['score_verdict']);
     ccc_admin_grid_close();
     echo '</div>';
     ccc_admin_grid_close();
@@ -122,6 +129,7 @@ function ccc_render_subpage_table_box(WP_Post $post): void
 function ccc_render_subpage_seo_box(WP_Post $post): void
 {
     ccc_render_fields_collection(ccc_expand_field_map([
+        'architecture_links' => ccc_get_subpage_field_map()['architecture_links'],
         'faq' => ccc_get_subpage_field_map()['faq'],
         'seo_title' => ccc_get_subpage_field_map()['seo_title'],
         'meta_description' => ccc_get_subpage_field_map()['meta_description'],
@@ -189,6 +197,7 @@ function ccc_seed_phase_one_subpages(int $post_id, WP_Post $post): void
         if (!is_wp_error($subpage_id) && $subpage_id > 0) {
             update_post_meta($subpage_id, 'parent_casino', $post_id);
             update_post_meta($subpage_id, 'subpage_type', $subpage_type);
+            update_post_meta($subpage_id, 'parent_review_link', get_permalink($post_id));
         }
     }
 

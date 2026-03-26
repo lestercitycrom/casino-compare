@@ -153,15 +153,28 @@ try {
     update_post_meta($casino_a_id, 'seo_title', 'Smoke Casino A SEO');
     update_post_meta($casino_a_id, 'meta_description', 'Smoke Casino A description');
     update_post_meta($casino_a_id, 'overall_rating', '4.7');
+    update_post_meta($casino_a_id, 'rating_reliability', '4.9');
     update_post_meta($casino_a_id, 'welcome_bonus_text', '200% + 100 FS');
     update_post_meta($casino_a_id, 'wagering', '35x');
     update_post_meta($casino_a_id, 'withdrawal_time_min', '1h');
     update_post_meta($casino_a_id, 'withdrawal_time_max', '24h');
     update_post_meta($casino_a_id, 'trustpilot_score', '4.4');
     update_post_meta($casino_a_id, 'license', 'MGA');
+    update_post_meta($casino_a_id, 'last_updated', '2026-03-24');
+    update_post_meta($casino_a_id, 'author_name', 'Chester Smoke');
+    update_post_meta($casino_a_id, 'support_channels', 'Live chat, email');
+    update_post_meta($casino_a_id, 'vip', 'VIP Lounge');
+    update_post_meta($casino_a_id, 'mobile_app', 'iOS and Android');
     update_post_meta($casino_a_id, 'intro_text', 'Smoke intro casino A');
     update_post_meta($casino_a_id, 'summary_1_title', 'Smoke Summary Heading');
     update_post_meta($casino_a_id, 'summary_1', '<p>Smoke summary content</p>');
+    update_post_meta($casino_a_id, 'pros', [
+        ['text' => 'Fast payouts'],
+        ['text' => 'Large game library'],
+    ]);
+    update_post_meta($casino_a_id, 'cons', [
+        ['text' => 'No PayPal'],
+    ]);
     wp_set_post_terms($casino_a_id, ['mga'], 'casino_license');
     wp_set_post_terms($casino_a_id, ['live-casino'], 'casino_feature');
     wp_set_post_terms($casino_a_id, ['visa'], 'payment_method');
@@ -218,8 +231,17 @@ try {
             'post_title' => 'Smoke Bonus ' . $suffix,
         ]);
         update_post_meta($bonus_subpage->ID, 'hero_title', 'Smoke Bonus Hero');
+        update_post_meta($bonus_subpage->ID, 'last_updated', '2026-03-20');
         update_post_meta($bonus_subpage->ID, 'intro_text', 'Bonus intro');
+        update_post_meta($bonus_subpage->ID, 'parent_review_link', (string) get_permalink($casino_a_id));
+        update_post_meta($bonus_subpage->ID, 'score_enabled', '1');
+        update_post_meta($bonus_subpage->ID, 'score_value', '9.3');
+        update_post_meta($bonus_subpage->ID, 'score_label', 'Bonus score');
+        update_post_meta($bonus_subpage->ID, 'score_verdict', 'Strong welcome package');
         update_post_meta($bonus_subpage->ID, 'main_content', '<p>Bonus content</p>');
+        update_post_meta($bonus_subpage->ID, 'architecture_links', [
+            ['label' => 'Bonus hub', 'url' => home_url('/bonus-casino/')],
+        ]);
     }
 
     if ($free_spins_subpage instanceof WP_Post) {
@@ -243,7 +265,20 @@ try {
     update_post_meta($hub_landing_id, 'landing_type', 'hub');
     update_post_meta($hub_landing_id, 'hero_title', 'Smoke Hub Hero');
     update_post_meta($hub_landing_id, 'intro_text', 'Smoke hub intro');
+    update_post_meta($hub_landing_id, 'last_updated', '2026-03-23');
     update_post_meta($hub_landing_id, 'top_casino_list', [$casino_a_id, $casino_b_id]);
+    update_post_meta($hub_landing_id, 'comparison_table_title', 'Hub comparison snapshot');
+    update_post_meta($hub_landing_id, 'comparison_table_headers', [
+        ['label' => 'Casino'],
+        ['label' => 'Bonus'],
+        ['label' => 'Payout'],
+    ]);
+    update_post_meta($hub_landing_id, 'comparison_table_rows', [
+        ['col_1' => 'Smoke Casino A', 'col_2' => '200% + 100 FS', 'col_3' => '1h - 24h'],
+        ['col_1' => 'Smoke Casino B', 'col_2' => '100% + 50 FS', 'col_3' => '2h - 36h'],
+    ]);
+    update_post_meta($hub_landing_id, 'howto_title', 'How to choose a bonus');
+    update_post_meta($hub_landing_id, 'howto_content', '<p>Compare wagering, payout speed and licensing.</p>');
 
     $comparison_landing_id = smoke_create_post([
         'post_type' => 'landing',
@@ -299,9 +334,24 @@ try {
     ], 'guide');
 
     update_post_meta($guide_id, 'author_name', 'Operator Smoke');
+    update_post_meta($guide_id, 'last_updated', '2026-03-22');
+    update_post_meta($guide_id, 'category', 'Guides');
+    update_post_meta($guide_id, 'reading_time', '7');
     update_post_meta($guide_id, 'intro_text', 'Guide intro');
+    update_post_meta($guide_id, 'callout_enabled', '1');
+    update_post_meta($guide_id, 'callout_title', 'Key takeaway');
+    update_post_meta($guide_id, 'callout_text', 'Check payout speed before signup.');
     update_post_meta($guide_id, 'main_content', '<p>Guide content</p>');
+    update_post_meta($guide_id, 'sidebar_top_title', 'Top picks');
+    update_post_meta($guide_id, 'sidebar_takeaway', '<p>Best options this month.</p>');
     update_post_meta($guide_id, 'sidebar_casino_list', [$casino_b_id]);
+    update_post_meta($guide_id, 'sidebar_comparison_link', (string) get_permalink($comparison_landing_id));
+    update_post_meta($guide_id, 'sidebar_related_guides', [
+        ['label' => 'Guide manual link', 'url' => home_url('/guide/manual-link/')],
+    ]);
+    update_post_meta($guide_id, 'money_page_links', [
+        ['label' => 'Best bonus comparison', 'url' => (string) get_permalink($comparison_landing_id)],
+    ]);
 
     update_post_meta($casino_a_id, 'money_page_links', [$comparison_landing_id]);
     update_post_meta($casino_a_id, 'alternative_casinos', [$casino_b_id]);
@@ -309,6 +359,7 @@ try {
     $casino_permalink = get_permalink($casino_a_id);
     $bonus_permalink = $bonus_subpage instanceof WP_Post ? get_permalink($bonus_subpage->ID) : '';
     $comparison_permalink = get_permalink($comparison_landing_id);
+    $hub_permalink = get_permalink($hub_landing_id);
     $trust_permalink = get_permalink($trust_landing_id);
     $guide_permalink = get_permalink($guide_id);
     $compare_page_permalink = get_permalink($compare_page_id);
@@ -316,6 +367,7 @@ try {
     smoke_assert(str_contains((string) $casino_permalink, '/avis/smoke-casino-a-' . $suffix . '/'), 'Casino permalink matches `/avis/{slug}/`');
     smoke_assert(str_contains((string) $bonus_permalink, '/avis/smoke-casino-a-' . $suffix . '/bonus/'), 'Subpage permalink matches `/avis/{casino}/{subpage}/`');
     smoke_assert(str_contains((string) $comparison_permalink, '/smoke-bonus-hub-' . $suffix . '/sans-depot/'), 'Nested landing permalink matches parent/child path');
+    smoke_assert(str_contains((string) $hub_permalink, '/smoke-bonus-hub-' . $suffix . '/'), 'Hub landing permalink resolves');
     smoke_assert(str_contains((string) $trust_permalink, '/smoke-trust-' . $suffix . '/'), 'Trust landing permalink resolves');
     smoke_assert(str_contains((string) $guide_permalink, '/guide/smoke-guide-' . $suffix . '/'), 'Guide permalink matches `/guide/{slug}/`');
     smoke_assert(str_contains((string) $compare_page_permalink, '/comparer/'), 'Compare page permalink matches `/comparer/`');
@@ -323,15 +375,25 @@ try {
     smoke_assert(smoke_http_status(home_url('/')) === 200, 'Homepage returns HTTP 200');
     smoke_assert(smoke_http_status((string) $casino_permalink) === 200, 'Casino page returns HTTP 200');
     smoke_assert(smoke_http_status((string) $bonus_permalink) === 200, 'Casino subpage returns HTTP 200');
+    smoke_assert(smoke_http_status((string) $hub_permalink) === 200, 'Hub landing page returns HTTP 200');
     smoke_assert(smoke_http_status((string) $comparison_permalink) === 200, 'Landing page returns HTTP 200');
     smoke_assert(smoke_http_status((string) $trust_permalink) === 200, 'Trust landing page returns HTTP 200');
     smoke_assert(smoke_http_status((string) $guide_permalink) === 200, 'Guide page returns HTTP 200');
     smoke_assert(smoke_http_status((string) $compare_page_permalink) === 200, 'Compare page returns HTTP 200');
 
     $casino_page_html = wp_remote_retrieve_body(wp_remote_get((string) $casino_permalink, ['timeout' => 15, 'redirection' => 1]));
+    $bonus_page_html = wp_remote_retrieve_body(wp_remote_get((string) $bonus_permalink, ['timeout' => 15, 'redirection' => 1]));
+    $hub_page_html = wp_remote_retrieve_body(wp_remote_get((string) $hub_permalink, ['timeout' => 15, 'redirection' => 1]));
     $comparison_page_html = wp_remote_retrieve_body(wp_remote_get((string) $comparison_permalink, ['timeout' => 15, 'redirection' => 1]));
     $trust_page_html = wp_remote_retrieve_body(wp_remote_get((string) $trust_permalink, ['timeout' => 15, 'redirection' => 1]));
+    $guide_page_html = wp_remote_retrieve_body(wp_remote_get((string) $guide_permalink, ['timeout' => 15, 'redirection' => 1]));
     smoke_assert(str_contains((string) $casino_page_html, 'Smoke Summary Heading'), 'Casino page renders custom summary heading');
+    smoke_assert(str_contains((string) $casino_page_html, 'Chester Smoke') && str_contains((string) $casino_page_html, '2026-03-24'), 'Casino page renders author/date badges');
+    smoke_assert(str_contains((string) $casino_page_html, 'VIP Lounge') && str_contains((string) $casino_page_html, 'iOS and Android'), 'Casino page renders technical review fields');
+    smoke_assert(str_contains((string) $casino_page_html, 'Fast payouts'), 'Casino page renders pros data');
+    smoke_assert(str_contains((string) $bonus_page_html, 'Strong welcome package') && str_contains((string) $bonus_page_html, 'Bonus hub'), 'Subpage renders score verdict and architecture links');
+    smoke_assert(str_contains((string) $hub_page_html, 'Hub comparison snapshot') && str_contains((string) $hub_page_html, 'How to choose a bonus'), 'Hub landing renders comparison table and how-to title');
+    smoke_assert(str_contains((string) $guide_page_html, 'Key takeaway') && str_contains((string) $guide_page_html, 'View comparison') && str_contains((string) $guide_page_html, 'Guide manual link'), 'Guide page renders callout and sidebar helper links');
     smoke_assert(((int) substr_count((string) $comparison_page_html, 'var cccTheme =')) === 1, 'Comparison landing localizes cccTheme only once');
     smoke_assert(str_contains((string) $trust_page_html, 'og:type') && str_contains((string) $trust_page_html, 'website'), 'Trust landing outputs og:type website');
 
@@ -398,6 +460,7 @@ try {
     smoke_assert((string) get_post_meta($trust_landing_id, 'trust_last_updated', true) === '2026-03-26', 'Trust landing keeps trust-specific last updated meta');
     smoke_assert((string) get_post_meta($comparison_landing_id, 'author_name', true) === 'Operator Smoke', 'Comparison landing author meta is not overwritten by trust fields');
     smoke_assert((string) get_post_meta($comparison_landing_id, 'last_updated', true) === '2026-03-25', 'Comparison landing last updated meta is not overwritten by trust fields');
+    smoke_assert((string) get_post_meta($bonus_subpage->ID, 'parent_review_link', true) === (string) $casino_permalink, 'Subpage stores explicit parent review link meta');
 
     $sitemap_query_args = apply_filters('wp_sitemaps_posts_query_args', [], 'casino_subpage');
     smoke_assert(isset($sitemap_query_args['meta_query']), 'Subpage sitemap query adds populated-content restriction');
@@ -414,5 +477,6 @@ try {
     smoke_log('INFO', 'Smoke test aborted due to fatal runtime exception');
     exit(1);
 }
+
 
 

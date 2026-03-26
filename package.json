@@ -1,0 +1,19 @@
+{
+  "name": "casino-compare-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "qa:seed": "npx playwright test --project=auth --project=seed",
+    "qa:e2e": "npx playwright test --project=auth --project=e2e",
+    "qa:e2e:headed": "npx playwright test --project=auth --project=e2e --headed",
+    "qa:report": "npx playwright show-report playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^20.19.37",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}

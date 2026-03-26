@@ -16,3 +16,15 @@ wp-content/debug.log
 wp-content/index.php
 wp-content/plugins/index.php
 wp-content/themes/index.php
+
+# Playwright
+node_modules/
+.auth/
+playwright-report/
+test-results/
+dist/
+.env
+
+# Local machine / generated content
+.claude/
+wp-content/uploads/

@@ -12,13 +12,13 @@ if ($faq_rows === []) {
     return;
 }
 ?>
-<section>
+<section class="faq-block">
     <h2><?php esc_html_e('FAQ', 'casino-compare-theme'); ?></h2>
     <?php foreach ($faq_rows as $row) : ?>
         <?php $question = (string) ($row['question'] ?? ''); ?>
         <?php $answer = (string) ($row['answer'] ?? ''); ?>
         <?php if ($question === '' && $answer === '') : continue; endif; ?>
-        <article>
+        <article class="faq-block__item">
             <?php if ($question !== '') : ?><h3><?php echo esc_html($question); ?></h3><?php endif; ?>
             <?php if ($answer !== '') : ?><p><?php echo esc_html($answer); ?></p><?php endif; ?>
         </article>

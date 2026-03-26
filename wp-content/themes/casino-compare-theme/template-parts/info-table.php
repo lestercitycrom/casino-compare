@@ -13,7 +13,7 @@ if ($rows === []) {
     return;
 }
 ?>
-<table>
+<table class="info-table">
     <tbody>
     <?php foreach ($rows as $label => $value) : ?>
         <tr>

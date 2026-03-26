@@ -102,6 +102,16 @@ function ccc_filter_document_title(string $title): string
 }
 add_filter('pre_get_document_title', 'ccc_filter_document_title');
 
+function ccc_disable_native_rel_canonical(): void
+{
+    if (!is_singular(['casino', 'casino_subpage', 'landing', 'guide'])) {
+        return;
+    }
+
+    remove_action('wp_head', 'rel_canonical');
+}
+add_action('wp', 'ccc_disable_native_rel_canonical');
+
 function ccc_output_seo_meta(): void
 {
     if (!is_singular(['casino', 'casino_subpage', 'landing', 'guide'])) {
