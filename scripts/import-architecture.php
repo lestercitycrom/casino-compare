@@ -433,6 +433,13 @@ foreach ($subpages_arch as $key => $row) {
             'faq'               => $faq,
             'architecture_links' => $arch_links,
         ]);
+    } else {
+        // No GSheet example — clear any stale invented content from previous imports
+        if (!IMP_DRY) {
+            foreach (['hero_title', 'intro_text', 'main_content', 'score_value', 'score_label', 'score_verdict', 'cta_text', 'cta_url'] as $k) {
+                delete_post_meta($sp_id, $k);
+            }
+        }
     }
     imp_meta($sp_id, $meta);
 }
