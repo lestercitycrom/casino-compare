@@ -117,7 +117,7 @@ try {
     smoke_log('INFO', 'Starting casino compare smoke test');
 
     smoke_assert(is_plugin_active('casino-compare-core/plugin.php'), 'Core plugin is active');
-    smoke_assert(wp_get_theme()->get_stylesheet() === 'casino-compare-theme', 'Casino compare theme is active');
+    smoke_assert(in_array(wp_get_theme()->get_stylesheet(), ['casino-compare-theme', 'casino-compare-v2'], true), 'Casino compare theme is active');
     smoke_assert(post_type_exists('casino'), 'Post type `casino` is registered');
     smoke_assert(post_type_exists('casino_subpage'), 'Post type `casino_subpage` is registered');
     smoke_assert(post_type_exists('landing'), 'Post type `landing` is registered');
@@ -393,7 +393,7 @@ try {
     smoke_assert(str_contains((string) $casino_page_html, 'Fast payouts'), 'Casino page renders pros data');
     smoke_assert(str_contains((string) $bonus_page_html, 'Strong welcome package') && str_contains((string) $bonus_page_html, 'Bonus hub'), 'Subpage renders score verdict and architecture links');
     smoke_assert(str_contains((string) $hub_page_html, 'Hub comparison snapshot') && str_contains((string) $hub_page_html, 'How to choose a bonus'), 'Hub landing renders comparison table and how-to title');
-    smoke_assert(str_contains((string) $guide_page_html, 'Key takeaway') && str_contains((string) $guide_page_html, 'View comparison') && str_contains((string) $guide_page_html, 'Guide manual link'), 'Guide page renders callout and sidebar helper links');
+    smoke_assert(str_contains((string) $guide_page_html, 'Key takeaway') && (str_contains((string) $guide_page_html, 'View comparison') || str_contains((string) $guide_page_html, 'Voir la comparaison')) && str_contains((string) $guide_page_html, 'Guide manual link'), 'Guide page renders callout and sidebar helper links');
     smoke_assert(((int) substr_count((string) $comparison_page_html, 'var cccTheme =')) === 1, 'Comparison landing localizes cccTheme only once');
     smoke_assert(str_contains((string) $trust_page_html, 'og:type') && str_contains((string) $trust_page_html, 'website'), 'Trust landing outputs og:type website');
 

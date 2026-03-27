@@ -24,8 +24,9 @@ $table_rows    = cct_normalize_repeater(get_post_meta($sp_id, 'table_rows', true
 $score_enabled = (bool) get_post_meta($sp_id, 'score_enabled', true);
 $score_value   = (string) get_post_meta($sp_id, 'score_value', true);
 $score_verdict = (string) get_post_meta($sp_id, 'score_verdict', true);
-$faq           = cct_get_meta('faq', $sp_id, []);
-$parent_link   = (string) (get_post_meta($sp_id, 'parent_review_link', true) ?: home_url('/avis/' . $casino_slug . '/'));
+$faq                = cct_get_meta('faq', $sp_id, []);
+$architecture_links = cct_normalize_link_rows(cct_get_meta('architecture_links', $sp_id, []));
+$parent_link        = (string) (get_post_meta($sp_id, 'parent_review_link', true) ?: home_url('/avis/' . $casino_slug . '/'));
 
 $subpage_types = [
     'bonus'           => 'Bonus',
@@ -108,6 +109,21 @@ $subpage_types = [
 
     <?php if ($cta_text !== '' && $cta_url !== '') : ?>
         <?php get_template_part('template-parts/cta-block', null, ['text' => $cta_text, 'url' => $cta_url]); ?>
+    <?php endif; ?>
+
+    <?php if ($architecture_links !== []) : ?>
+        <div class="content-panel" style="margin-top:24px">
+            <h3 style="margin-bottom:12px;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em">Liens associés</h3>
+            <ul style="display:flex;flex-direction:column;gap:8px">
+                <?php foreach ($architecture_links as $link) : ?>
+                    <li>
+                        <a href="<?php echo esc_url((string) $link['url']); ?>">
+                            &#8594; <?php echo esc_html((string) $link['label']); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     <?php endif; ?>
 
     <?php get_template_part('template-parts/faq-block', null, ['faq' => $faq]); ?>

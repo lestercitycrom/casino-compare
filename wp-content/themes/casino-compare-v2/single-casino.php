@@ -23,6 +23,9 @@ $cons          = cct_repeater_text_list(get_post_meta($casino_id, 'cons', true),
 $verdict       = get_post_meta($casino_id, 'final_verdict', true);
 $casino_slug   = get_post_field('post_name', $casino_id);
 
+$author_name  = (string) get_post_meta($casino_id, 'author_name', true);
+$last_updated = (string) get_post_meta($casino_id, 'last_updated', true);
+
 // Info table fields
 $info = array_filter([
     'Licence'     => get_post_meta($casino_id, 'license', true),
@@ -31,6 +34,7 @@ $info = array_filter([
     'Jeux'        => get_post_meta($casino_id, 'games_count', true),
     'Support'     => get_post_meta($casino_id, 'support_channels', true),
     'Application' => get_post_meta($casino_id, 'mobile_app', true),
+    'VIP'         => get_post_meta($casino_id, 'vip', true),
 ]);
 
 // Subpage navigation
@@ -159,6 +163,17 @@ $subpage_labels = [
             <button type="button" class="btn-outline btn-block" style="margin-top:12px" data-ccc-compare-id="<?php echo esc_attr((string) $casino_id); ?>">
                 Comparer
             </button>
+
+            <?php if ($author_name !== '' || $last_updated !== '') : ?>
+                <div class="meta-badges" style="margin-top:16px">
+                    <?php if ($author_name !== '') : ?>
+                        <span class="meta-badge"><?php echo esc_html($author_name); ?></span>
+                    <?php endif; ?>
+                    <?php if ($last_updated !== '') : ?>
+                        <span class="meta-badge"><?php echo esc_html($last_updated); ?></span>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
         </aside>
 
