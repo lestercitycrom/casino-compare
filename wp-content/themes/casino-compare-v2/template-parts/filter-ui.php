@@ -18,7 +18,7 @@ $payment_options = ['visa' => 'Visa/MC', 'paypal' => 'PayPal', 'bitcoin' => 'Bit
 $game_options    = ['slots' => 'Slots', 'blackjack' => 'Blackjack', 'roulette' => 'Roulette', 'poker' => 'Poker'];
 $sort_options    = ['' => 'Tri par défaut', 'rating_desc' => 'Note ↓', 'rating_asc' => 'Note ↑', 'bonus_desc' => 'Bonus ↓'];
 ?>
-<div class="filter-bar">
+<div id="ccc-filter-form" class="filter-bar">
 
     <!-- Sort select -->
     <select class="filter-select" name="sort" onchange="this.form && this.form.submit()">
