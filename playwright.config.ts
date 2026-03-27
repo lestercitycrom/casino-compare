@@ -36,6 +36,7 @@ export default defineConfig({
       testDir: './tests/setup',
       testMatch: 'seed.setup.ts',
       dependencies: ['auth'],
+      timeout: 600000, // 10 min — logo uploads + admin UI fills are slow
       use: {
         ...devices['Desktop Chrome'],
         storageState: AUTH_FILE,

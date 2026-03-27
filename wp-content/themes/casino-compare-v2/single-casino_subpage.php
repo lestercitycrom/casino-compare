@@ -24,6 +24,7 @@ $table_rows    = cct_normalize_repeater(get_post_meta($sp_id, 'table_rows', true
 $score_enabled = (bool) get_post_meta($sp_id, 'score_enabled', true);
 $score_value   = (string) get_post_meta($sp_id, 'score_value', true);
 $score_verdict = (string) get_post_meta($sp_id, 'score_verdict', true);
+$score_label   = (string) get_post_meta($sp_id, 'score_label', true);
 $faq                = cct_get_meta('faq', $sp_id, []);
 $architecture_links = cct_normalize_link_rows(cct_get_meta('architecture_links', $sp_id, []));
 $parent_link        = (string) (get_post_meta($sp_id, 'parent_review_link', true) ?: home_url('/avis/' . $casino_slug . '/'));
@@ -100,6 +101,9 @@ $subpage_types = [
 
     <?php if ($score_enabled && $score_value !== '') : ?>
         <div class="score-block" style="margin-top:24px">
+            <?php if ($score_label !== '') : ?>
+                <div class="score-block__label"><?php echo esc_html($score_label); ?></div>
+            <?php endif; ?>
             <div class="score-block__value"><?php echo esc_html($score_value); ?></div>
             <?php if ($score_verdict !== '') : ?>
                 <div class="score-block__verdict"><?php echo esc_html($score_verdict); ?></div>
