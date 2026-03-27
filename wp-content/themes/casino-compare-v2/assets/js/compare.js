@@ -12,11 +12,11 @@
     const saveIds = (ids) => localStorage.setItem(storageKey, JSON.stringify(ids.slice(0, 3)));
 
     const updateBadge = () => {
-        const badge = document.getElementById('ccc-compare-badge');
-
-        if (badge) {
-            badge.textContent = `Comparer (${getIds().length})`;
-        }
+        const count = getIds().length;
+        ['ccc-compare-badge', 'ccc-compare-badge-home'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = `Comparer (${count})`;
+        });
     };
 
     const removeId = (id) => {
@@ -116,7 +116,8 @@
 
         fetch(`${window.cccTheme.restUrl}ccc/v1/compare?ids=${ids.join(',')}`)
             .then((response) => response.json())
-            .then((payload) => renderCompareTable(app, payload));
+            .then((payload) => renderCompareTable(app, payload))
+            .catch(() => renderEmptyState(app));
     };
 
     document.addEventListener('click', (event) => {
