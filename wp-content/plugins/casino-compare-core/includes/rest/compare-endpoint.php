@@ -19,12 +19,12 @@ add_action('rest_api_init', 'ccc_register_compare_endpoint');
 function ccc_comparison_fields(): array
 {
     return [
-        'overall_rating' => __('Rating', 'casino-compare-core'),
-        'welcome_bonus_text' => __('Bonus', 'casino-compare-core'),
-        'wagering' => __('Wagering', 'casino-compare-core'),
-        'withdrawal_time_min' => __('Withdrawal Time Min', 'casino-compare-core'),
-        'withdrawal_time_max' => __('Withdrawal Time Max', 'casino-compare-core'),
-        'trustpilot_score' => __('Trustpilot Score', 'casino-compare-core'),
+        'overall_rating'      => 'Note globale',
+        'welcome_bonus_text'  => 'Bonus de bienvenue',
+        'wagering'            => 'Condition de mise',
+        'withdrawal_time_min' => 'Retrait min (h)',
+        'withdrawal_time_max' => 'Retrait max (h)',
+        'trustpilot_score'    => 'Score Trustpilot',
     ];
 }
 

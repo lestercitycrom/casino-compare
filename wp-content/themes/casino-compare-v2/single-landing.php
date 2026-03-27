@@ -154,6 +154,7 @@ $cross_silo_links = function_exists('ccc_get_cross_silo_links') ? ccc_get_cross_
             <?php endif; ?>
 
             <?php $top_ids = array_map('intval', (array) cct_get_meta('top_casino_list', $landing_id, [])); ?>
+            <?php if ($top_ids === []) : $top_ids = array_column(cct_get_top_casinos(3), 'ID'); endif; ?>
             <?php if ($top_ids !== []) : _prime_post_caches($top_ids, false, true); ?>
                 <section class="content-section">
                     <h2>Top casinos</h2>

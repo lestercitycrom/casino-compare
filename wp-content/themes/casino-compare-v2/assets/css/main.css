@@ -1071,6 +1071,29 @@ p {
     background: var(--color-border);
     font-weight: 600;
     color: var(--color-text);
+    vertical-align: middle;
+}
+
+.compare-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-top: 6px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-text-soft);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.compare-remove-btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: #ef4444;
+    color: #ef4444;
 }
 
 .compare-table tbody tr:nth-child(even) {

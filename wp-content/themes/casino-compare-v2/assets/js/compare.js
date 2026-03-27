@@ -70,8 +70,10 @@
             title.textContent = item.title || '';
             const removeButton = document.createElement('button');
             removeButton.type = 'button';
+            removeButton.className = 'compare-remove-btn';
             removeButton.setAttribute('data-ccc-remove-compare-id', String(item.id));
-            removeButton.textContent = 'Remove';
+            removeButton.setAttribute('aria-label', 'Retirer');
+            removeButton.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
             itemHeader.append(title, removeButton);
             headRow.appendChild(itemHeader);
         });
@@ -89,7 +91,7 @@
 
             items.forEach((item) => {
                 const valueCell = document.createElement('td');
-                valueCell.textContent = item[fieldKey] || '';
+                valueCell.textContent = item[fieldKey] || '—';
                 row.appendChild(valueCell);
             });
 
