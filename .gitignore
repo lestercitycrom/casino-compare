@@ -28,3 +28,7 @@ dist/
 # Local machine / generated content
 .claude/
 wp-content/uploads/
+
+# Keep these (explicit allowlist)
+!.github/
+!scripts/migrations/

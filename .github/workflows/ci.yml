@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Check PHP syntax — theme
+        run: |
+          find wp-content/themes/casino-compare-v2 -name "*.php" \
+            -exec php -l {} \; | grep -v "No syntax errors" || true
+
+      - name: Check PHP syntax — plugin
+        run: |
+          find wp-content/plugins/casino-compare-core -name "*.php" \
+            -exec php -l {} \; | grep -v "No syntax errors" || true
+
+      - name: Check PHP syntax — scripts
+        run: |
+          find scripts -name "*.php" \
+            -exec php -l {} \; | grep -v "No syntax errors" || true
+
+      - name: Fail on any syntax error
+        run: |
+          ERRORS=$(find wp-content/themes/casino-compare-v2 wp-content/plugins/casino-compare-core scripts \
+            -name "*.php" -exec php -l {} \; 2>&1 | grep "PHP Parse error" || true)
+          if [ -n "$ERRORS" ]; then
+            echo "$ERRORS"
+            exit 1
+          fi
+          echo "All PHP files OK"
