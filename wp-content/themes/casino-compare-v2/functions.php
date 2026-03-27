@@ -36,53 +36,58 @@ add_action('after_setup_theme', 'ccv2_theme_setup');
 function ccv2_enqueue_assets(): void
 {
     $version = '1.0.0';
+    $tpl_uri = get_template_directory_uri();
 
-    // Google Fonts — Space Grotesk 300–700
+    // Self-hosted Space Grotesk (no external request)
     wp_enqueue_style(
-        'ccv2-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap',
+        'ccv2-fonts',
+        $tpl_uri . '/assets/fonts/space-grotesk.css',
         [],
-        null
+        $version
     );
 
     // Main stylesheet (style.css — vars + reset)
     wp_enqueue_style(
         'ccv2-style',
         get_stylesheet_uri(),
-        ['ccv2-google-fonts'],
+        ['ccv2-fonts'],
         $version
     );
 
     // Component styles
     wp_enqueue_style(
         'ccv2-main',
-        get_template_directory_uri() . '/assets/css/main.css',
+        $tpl_uri . '/assets/css/main.css',
         ['ccv2-style'],
         $version
     );
 
-    // Main JS (footer)
+    // Main JS — all pages (small: FAQ accordion, mobile menu)
     wp_enqueue_script(
         'ccv2-main-js',
-        get_template_directory_uri() . '/assets/js/main.js',
+        $tpl_uri . '/assets/js/main.js',
         [],
         $version,
-        ['in_footer' => true]
+        ['in_footer' => true, 'strategy' => 'defer']
     );
 
-    // Compare JS (footer)
-    wp_enqueue_script(
-        'ccv2-compare',
-        get_template_directory_uri() . '/assets/js/compare.js',
-        [],
-        $version,
-        ['in_footer' => true]
-    );
+    // Compare JS — only on pages that need it
+    $needs_compare = is_singular(['casino', 'landing', 'guide'])
+        || is_page_template('templates/compare-page.php');
 
-    // Localize compare script
-    wp_localize_script('ccv2-compare', 'cccTheme', [
-        'restUrl' => esc_url_raw(rest_url()),
-    ]);
+    if ($needs_compare) {
+        wp_enqueue_script(
+            'ccv2-compare',
+            $tpl_uri . '/assets/js/compare.js',
+            [],
+            $version,
+            ['in_footer' => true, 'strategy' => 'defer']
+        );
+
+        wp_localize_script('ccv2-compare', 'cccTheme', [
+            'restUrl' => esc_url_raw(rest_url()),
+        ]);
+    }
 }
 add_action('wp_enqueue_scripts', 'ccv2_enqueue_assets');
 
@@ -304,12 +309,14 @@ function cct_get_top_casinos(int $limit = 3): array
 {
     // First: casinos with a rating, sorted desc
     $rated = get_posts([
-        'post_type'      => 'casino',
-        'post_status'    => 'publish',
-        'posts_per_page' => $limit,
-        'meta_key'       => 'overall_rating',
-        'orderby'        => 'meta_value_num',
-        'order'          => 'DESC',
+        'post_type'               => 'casino',
+        'post_status'             => 'publish',
+        'posts_per_page'          => $limit,
+        'meta_key'                => 'overall_rating',
+        'orderby'                 => 'meta_value_num',
+        'order'                   => 'DESC',
+        'update_post_meta_cache'  => true,
+        'update_post_term_cache'  => false,
     ]);
 
     if (count($rated) >= $limit) {
@@ -319,13 +326,15 @@ function cct_get_top_casinos(int $limit = 3): array
     // Fill remaining slots with unrated casinos
     $rated_ids = array_column($rated, 'ID');
     $unrated   = get_posts([
-        'post_type'      => 'casino',
-        'post_status'    => 'publish',
-        'posts_per_page' => $limit - count($rated),
-        'post__not_in'   => $rated_ids ?: [0],
-        'orderby'        => 'title',
-        'order'          => 'ASC',
-        'meta_query'     => [['key' => 'overall_rating', 'compare' => 'NOT EXISTS']],
+        'post_type'              => 'casino',
+        'post_status'            => 'publish',
+        'posts_per_page'         => $limit - count($rated),
+        'post__not_in'           => $rated_ids ?: [0],
+        'orderby'                => 'title',
+        'order'                  => 'ASC',
+        'meta_query'             => [['key' => 'overall_rating', 'compare' => 'NOT EXISTS']],
+        'update_post_meta_cache' => true,
+        'update_post_term_cache' => false,
     ]);
 
     return array_merge($rated, $unrated);
