@@ -25,8 +25,8 @@ require_once __DIR__ . '/../wp-load.php';
 remove_all_actions('save_post_casino');
 
 define('CCC_IMPORT_DRY_RUN', $dry_run);
-define('CCC_LOGOS_DIR', dirname(__DIR__) . '/flow/Casinos Logo');
-define('CCC_EXCEL_DIR', dirname(__DIR__) . '/flow/base TZ');
+define('CCC_LOGOS_DIR', __DIR__ . '/data/logos');
+define('CCC_EXCEL_DIR', __DIR__ . '/data');
 
 $report = [
     'casinos'   => ['created' => 0, 'updated' => 0, 'skipped' => 0],
@@ -1161,7 +1161,7 @@ if ($dry_run) {
 // WRITE REPORT FILE
 // ──────────────────────────────────────────────────────────────────────────────
 
-$report_path   = dirname(__DIR__) . '/flow/tasks/4. Demo data/clark-import-report.md';
+$report_path   = __DIR__ . '/import-report.md';
 $date          = date('Y-m-d H:i');
 $import_status = $dry_run ? 'DRY RUN' : 'COMPLETED';
 

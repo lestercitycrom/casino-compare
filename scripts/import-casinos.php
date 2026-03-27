@@ -176,7 +176,7 @@ function import_casino(array $data): void
 
 // ── Logo paths ────────────────────────────────────────────────────────────────
 
-$logo_dir = 'D:/ospanel/home/casino-compare.local/flow/Casinos Logo/';
+$logo_dir = __DIR__ . '/data/logos/';
 $logos    = glob($logo_dir . '*.jpg');
 sort($logos);
 

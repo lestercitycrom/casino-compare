@@ -26,8 +26,8 @@ require_once __DIR__ . '/../wp-load.php';
 remove_all_actions('save_post_casino'); // suppress auto-skeleton hook
 
 define('IMP_DRY',      $dry_run);
-define('IMP_ARCH_CSV', dirname(__DIR__) . '/flow/base TZ/architecture-complete-finale-casino — копия/architecture-complete-finale-casino — копия - Architecture Complète.csv');
-define('IMP_GSHEET_DIR', dirname(__DIR__) . '/flow/base TZ/google-sheets-structures-wp-EN');
+define('IMP_ARCH_CSV', __DIR__ . '/data/architecture.csv');
+define('IMP_GSHEET_DIR', __DIR__ . '/data/gsheet');
 
 $stats = ['created' => [], 'updated' => [], 'skipped' => 0, 'deleted' => 0, 'warnings' => []];
 
@@ -650,7 +650,7 @@ if ($stats['warnings']) {
 }
 
 // Write report file
-$report_path = dirname(__DIR__) . '/flow/tasks/4. Demo data/clark-import-report.md';
+$report_path = __DIR__ . '/import-report.md';
 $date = date('Y-m-d H:i');
 $status_str = IMP_DRY ? 'DRY RUN' : 'COMPLETED';
 
