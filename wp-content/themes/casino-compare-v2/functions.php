@@ -72,7 +72,8 @@ function ccv2_enqueue_assets(): void
     );
 
     // Compare JS — only on pages that need it
-    $needs_compare = is_singular(['casino', 'landing', 'guide'])
+    $needs_compare = is_front_page()
+        || is_singular(['casino', 'landing', 'guide'])
         || is_page_template('templates/compare-page.php');
 
     if ($needs_compare) {
